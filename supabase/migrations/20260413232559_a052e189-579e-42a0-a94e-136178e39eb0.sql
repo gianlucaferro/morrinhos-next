@@ -1,0 +1,1 @@
+ALTER TABLE public.classificados ADD COLUMN IF NOT EXISTS foto_perfil text;

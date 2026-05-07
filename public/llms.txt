@@ -1,0 +1,48 @@
+# Morrinhos.ai
+
+> Transparência municipal de Morrinhos, GO com inteligência artificial. Dados públicos verificáveis.
+
+Morrinhos.ai é uma plataforma independente que utiliza inteligência artificial para tornar acessíveis os dados públicos do município de Morrinhos, Goiás, Brasil. O projeto não tem vínculo com a Câmara Municipal ou a Prefeitura.
+
+## Seções
+
+- [Início](https://morrinhos.ai/): Painel com indicadores municipais, projetos recentes, emendas e ranking de vereadores.
+- [Compra e Venda MHS](https://morrinhos.ai/compra-e-venda): Classificados gratuitos de Morrinhos — anuncie e compre imóveis, veículos, eletrônicos, serviços e mais. Com fotos, localização por bairro, otimização de descrição por IA, busca por voz e contato direto via WhatsApp.
+- [Zap MHS](https://morrinhos.ai/zap-mhs): Diretório de WhatsApp dos estabelecimentos comerciais de Morrinhos, organizados por categoria.
+- [Farmácias de Plantão](https://morrinhos.ai/plantao-farmacias): Escala semanal das farmácias de plantão com telefone, WhatsApp e link para o Waze.
+- [Coleta de Lixo](https://morrinhos.ai/coleta-lixo): Calendário de coleta de lixo por bairro, incluindo coleta seletiva.
+- [Câmara Municipal](https://morrinhos.ai/camara): Vereadores, projetos de lei, votações, remunerações e atuação parlamentar.
+- [Vereadores](https://morrinhos.ai/vereadores): Perfil individual de cada vereador com projetos, votações e remuneração.
+- [Atuação Parlamentar](https://morrinhos.ai/atuacao-parlamentar): Indicações, requerimentos e moções dos vereadores.
+- [Prefeitura](https://morrinhos.ai/prefeitura): Secretarias, servidores, contratos, licitações, obras, decretos, portarias e leis municipais.
+- [Saúde](https://morrinhos.ai/saude): Estabelecimentos de saúde, equipes, indicadores epidemiológicos e repasses do SUS.
+- [Educação](https://morrinhos.ai/educacao): Escolas, IDEB, matrículas, investimentos e programas educacionais.
+- [Benefícios Sociais](https://morrinhos.ai/beneficios-sociais): Bolsa Família, BPC, Pé-de-Meia e outros programas sociais.
+- [Impostos](https://morrinhos.ai/arrecadacao): Arrecadação municipal, IPTU, ISS, ITBI e comparativo com outros municípios de Goiás.
+- [Sobre](https://morrinhos.ai/sobre): Metodologia, fontes oficiais e informações sobre o projeto.
+
+## Dados Disponíveis
+
+- Projetos de lei e votações da Câmara Municipal
+- Remuneração de vereadores e servidores públicos
+- Emendas parlamentares federais e estaduais destinadas ao município
+- Contratos, licitações e obras públicas
+- Decretos, portarias e leis municipais
+- Indicadores de saúde, educação e benefícios sociais
+- Arrecadação e receitas municipais
+- Indicadores demográficos e econômicos (IBGE)
+
+## Fontes Oficiais
+
+- Portal da Transparência da Câmara Municipal de Morrinhos
+- Portal da Transparência da Prefeitura de Morrinhos
+- IBGE Cidades
+- Portal da Transparência do Governo Federal
+- DATASUS / CNES
+- INEP / Censo Escolar
+- Portal de Emendas Parlamentares
+
+## Contato
+
+- Instagram: [@morrinhos.ai](https://www.instagram.com/morrinhos.ai)
+- Site: [morrinhos.ai](https://morrinhos.ai)

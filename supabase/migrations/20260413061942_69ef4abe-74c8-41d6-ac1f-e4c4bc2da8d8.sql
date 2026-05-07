@@ -1,0 +1,1 @@
+ALTER TABLE classificados ADD COLUMN IF NOT EXISTS notificado_expiracao TIMESTAMPTZ;

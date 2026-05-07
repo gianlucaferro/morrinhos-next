@@ -1,0 +1,1 @@
+ALTER TABLE public.educacao_escolas ADD COLUMN diretor_nome text;

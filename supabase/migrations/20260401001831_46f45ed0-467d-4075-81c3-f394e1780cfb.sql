@@ -1,0 +1,1 @@
+UPDATE zap_establishments SET category = 'Serviços Especializados' WHERE id = 'f037de44-47ce-42c5-a6e0-26ae910af0a8';

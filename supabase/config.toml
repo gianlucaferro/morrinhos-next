@@ -1,0 +1,219 @@
+project_id = "oinweocqcptwxqsztlcl"
+
+[functions.sync-projetos]
+verify_jwt = false
+
+[functions.sync-atuacao]
+verify_jwt = false
+
+[functions.summarize-atuacao]
+verify_jwt = false
+
+[functions.sync-prefeitura-mensal]
+verify_jwt = false
+
+[functions.sync-prefeitura-diaria]
+verify_jwt = false
+
+[functions.sync-lei-organica]
+verify_jwt = false
+
+[functions.summarize-lei-organica]
+verify_jwt = false
+
+[functions.extract-lei-organica-pdf]
+verify_jwt = false
+
+[functions.parse-lei-organica]
+verify_jwt = false
+
+[functions.summarize-artigo]
+verify_jwt = false
+
+[functions.sync-decretos]
+verify_jwt = false
+
+[functions.summarize-decreto]
+verify_jwt = false
+
+[functions.sync-indicadores-home]
+verify_jwt = false
+
+[functions.sync-portarias]
+verify_jwt = false
+
+[functions.summarize-portaria]
+verify_jwt = false
+
+[functions.sync-leis-municipais]
+verify_jwt = false
+
+[functions.summarize-lei-municipal]
+verify_jwt = false
+
+[functions.batch-categorize-leis]
+verify_jwt = false
+
+[functions.sync-emendas]
+verify_jwt = false
+
+[functions.send-weekly-digest]
+verify_jwt = false
+
+[functions.sync-vereadores]
+verify_jwt = false
+
+[functions.sync-diarias]
+verify_jwt = false
+
+[functions.sync-despesas]
+verify_jwt = false
+
+[functions.sync-votacoes]
+verify_jwt = false
+
+[functions.sync-remuneracao-vereadores]
+verify_jwt = false
+
+[functions.sync-executivo-secretarias]
+verify_jwt = false
+
+[functions.sync-obras]
+verify_jwt = false
+
+[functions.sync-saude-hiv]
+verify_jwt = false
+
+[functions.sync-saude-sesgo]
+verify_jwt = false
+
+[functions.sync-pe-de-meia]
+verify_jwt = false
+
+[functions.sync-beneficios-sociais]
+verify_jwt = false
+
+[functions.sync-arrecadacao]
+verify_jwt = false
+
+[functions.sync-arrecadacao-comparativo]
+verify_jwt = false
+
+[functions.summarize-imposto]
+verify_jwt = false
+
+[functions.sync-cde-subsidios]
+verify_jwt = false
+
+[functions.import-folha-manual]
+verify_jwt = false
+
+[functions.summarize-servidor]
+verify_jwt = false
+
+[functions.sync-camara-servidores]
+verify_jwt = false
+
+[functions.sync-agro]
+verify_jwt = false
+
+[functions.sync-saude-hiv-casos]
+verify_jwt = false
+
+[functions.sync-mortalidade]
+verify_jwt = false
+
+[functions.sync-presenca-centi]
+verify_jwt = false
+
+[functions.sync-presenca-sessoes]
+verify_jwt = false
+
+[functions.sync-presenca-atas]
+verify_jwt = false
+
+[functions.sync-seguranca]
+verify_jwt = false
+
+[functions.summarize-generic]
+verify_jwt = false
+
+[functions.summarize-contrato]
+verify_jwt = false
+
+[functions.sync-contratos-aditivos]
+verify_jwt = false
+
+[functions.analyze-contrato-risco]
+verify_jwt = false
+
+[functions.send-push]
+verify_jwt = false
+
+[functions.backup-zap-pba]
+verify_jwt = false
+
+[functions.sync-health-check]
+verify_jwt = false
+
+[functions.consulta-placa]
+verify_jwt = false
+
+# Webhooks / públicas / cron (sem JWT)
+[functions.auth-email-hook]
+verify_jwt = false
+
+[functions.create-donation]
+verify_jwt = false
+
+[functions.enrich-camara-contratos]
+verify_jwt = false
+
+[functions.enrich-contratos]
+verify_jwt = false
+
+[functions.notify-expiring-ads]
+verify_jwt = false
+
+[functions.sitemap-classificados]
+verify_jwt = false
+
+[functions.unsubscribe-push]
+verify_jwt = false
+
+[functions.sync-camara-atos]
+verify_jwt = false
+
+[functions.sync-camara-financeiro]
+verify_jwt = false
+
+[functions.sync-contas-publicas]
+verify_jwt = false
+
+[functions.sync-educacao]
+verify_jwt = false
+
+[functions.sync-fornecedores-cnpj]
+verify_jwt = false
+
+[functions.sync-frota-veiculos]
+verify_jwt = false
+
+[functions.sync-saude-estabelecimentos]
+verify_jwt = false
+
+[functions.sync-saude-indicadores]
+verify_jwt = false
+
+[functions.sync-saude-srag]
+verify_jwt = false
+
+[functions.sync-transferencias-federais]
+verify_jwt = false
+
+# Functions chamadas pelo frontend (JWT verify ON, default)
+# Mantidas como default para evitar abuso de IA paga ou admin sem auth:
+# admin-classificados, admin-login, admin-zap-read, admin-zap-update,
+# ai-search, optimize-description, suggest-category, transcribe-audio,
+# summarize-camara-contrato, summarize-licitacao, summarize-obra, summarize-secretario,
+# import-folha-xlsx, parse-folha-md

@@ -1,0 +1,169 @@
+# Morrinhos.ai — Transparência Municipal com Inteligência Artificial
+
+## Sobre o Projeto
+
+Morrinhos.ai é uma plataforma independente e sem fins lucrativos que utiliza inteligência artificial para tornar acessíveis e compreensíveis os dados públicos do município de Morrinhos, localizado no estado de Goiás, Brasil. O projeto não possui vínculo com a Câmara Municipal, Prefeitura ou qualquer órgão público.
+
+Todos os dados apresentados são obtidos de fontes oficiais públicas e verificáveis. A IA é utilizada para resumir documentos legislativos, categorizar informações e facilitar a compreensão cidadã.
+
+## Município de Morrinhos
+
+- **Localização**: Goiás, Brasil
+- **Região**: Centro-Oeste
+- **População**: Aproximadamente 26.000 habitantes (IBGE)
+- **Área**: 2.405 km²
+- **Economia**: Agropecuária (destaque para pecuária leiteira), comércio e serviços
+
+## Câmara Municipal
+
+### Vereadores (Legislatura 2025–2028)
+A Câmara Municipal de Morrinhos é composta por 15 vereadores eleitos pelo voto popular. Cada vereador pode ser consultado individualmente na plataforma com informações sobre:
+- Projetos de lei de sua autoria
+- Votações em plenário
+- Remuneração mensal (subsídio bruto e líquido)
+- Indicações, requerimentos e moções
+- Cargo na mesa diretora (se aplicável)
+- Número de votos na eleição
+
+### Projetos de Lei
+A plataforma acompanha projetos de lei, decretos legislativos, resoluções e outros atos normativos. Cada projeto inclui:
+- Número e tipo
+- Autor(a)
+- Ementa (descrição oficial)
+- Resumo em linguagem simples (gerado por IA)
+- Status de tramitação
+- Link para documento original
+
+### Votações
+Registro das votações em plenário com resultado (aprovado/rejeitado) e link para a fonte oficial.
+
+### Remuneração de Vereadores
+Dados mensais de remuneração incluindo:
+- Subsídio bruto
+- Valor líquido
+- Subsídio de referência da legislatura
+- Fonte oficial verificável
+
+### Atuação Parlamentar
+Acompanhamento de indicações, requerimentos e moções apresentados pelos vereadores, com resumos gerados por IA.
+
+## Prefeitura Municipal
+
+### Poder Executivo
+- Prefeita e Vice-Prefeito com informações de mandato
+- Secretarias municipais com secretários, contatos e subsídios
+
+### Servidores Públicos
+Dados de servidores da Câmara e da Prefeitura incluindo:
+- Nome e cargo
+- Remuneração bruta e líquida
+- Órgão e secretaria
+
+### Contratos e Licitações
+- Contratos vigentes com empresa, valor e objeto
+- Licitações com modalidade, status e resultados
+
+### Obras Públicas
+Acompanhamento de obras municipais com status, valor e empresa responsável.
+
+### Legislação Municipal
+- Decretos com ementa e resumo por IA
+- Portarias com categorização automática
+- Leis municipais com resumo simplificado
+- Lei Orgânica do Município (artigos individuais com resumo por IA)
+
+## Saúde
+
+### Estabelecimentos
+Dados do CNES (Cadastro Nacional de Estabelecimentos de Saúde):
+- UBS, hospitais, clínicas e laboratórios
+- Endereço, telefone, número de leitos e profissionais
+- Coordenadas geográficas para mapa
+
+### Indicadores de Saúde
+- Cobertura vacinal
+- Mortalidade infantil
+- Casos de dengue, HIV/AIDS e SRAG
+- Indicadores epidemiológicos por semana/mês
+
+### Repasses do SUS
+Valores repassados pelo governo federal ao município por bloco de financiamento (Atenção Básica, MAC, Vigilância, etc.)
+
+### Equipes de Saúde
+Equipes de Saúde da Família (ESF), equipes de saúde bucal e NASF com profissionais e áreas de cobertura.
+
+## Educação
+
+### Escolas
+Dados do Censo Escolar/INEP:
+- Escolas municipais, estaduais e privadas
+- IDEB (Índice de Desenvolvimento da Educação Básica)
+- Infraestrutura (biblioteca, laboratório, quadra, internet, acessibilidade)
+- Taxas de aprovação, reprovação e abandono
+- Matrículas por etapa de ensino
+
+### Ensino Superior
+Instituições de ensino superior presentes no município com cursos, modalidades e conceitos do MEC.
+
+### Investimentos em Educação
+Orçamento educacional, gasto por aluno, FUNDEB e percentual do orçamento municipal.
+
+### Programas Educacionais
+Programas federais, estaduais e municipais ativos na área de educação.
+
+## Benefícios Sociais
+
+Dados de programas sociais do governo federal no município:
+- **Bolsa Família**: Número de beneficiários e valor total pago
+- **BPC (Benefício de Prestação Continuada)**: Idosos e pessoas com deficiência
+- **Pé-de-Meia**: Programa de incentivo à permanência escolar
+- Outros programas sociais com valores e beneficiários por competência
+
+## Arrecadação e Impostos
+
+### Receitas Municipais
+- IPTU, ISS, ITBI e outras receitas tributárias
+- Transferências constitucionais (FPM, ICMS, IPVA)
+- Receitas per capita
+
+### Comparativo Regional
+Comparação da arrecadação de Morrinhos com a média de municípios de porte similar em Goiás.
+
+## Emendas Parlamentares
+
+Emendas parlamentares federais e estaduais destinadas ao município:
+- Parlamentar autor(a) e esfera (federal/estadual)
+- Valor empenhado e valor pago
+- Objeto/destinação da emenda
+- Ranking de parlamentares por valor destinado
+
+## Fontes de Dados
+
+Todas as informações são obtidas de fontes oficiais públicas:
+
+1. **Portal da Transparência da Câmara Municipal de Morrinhos** — Projetos de lei, votações, remunerações, atuação parlamentar
+2. **Portal da Transparência da Prefeitura de Morrinhos** — Servidores, contratos, licitações, despesas, decretos, portarias
+3. **IBGE Cidades** — Indicadores demográficos, econômicos e sociais
+4. **Portal da Transparência do Governo Federal** — Bolsa Família, BPC, emendas parlamentares
+5. **DATASUS / CNES** — Estabelecimentos de saúde, equipes, indicadores epidemiológicos
+6. **INEP / Censo Escolar** — Escolas, IDEB, matrículas
+7. **e-MEC** — Instituições de ensino superior e cursos
+8. **Secretaria de Saúde de Goiás (SES-GO)** — Indicadores estaduais de saúde
+9. **Portal de Emendas Parlamentares** — Emendas federais e estaduais
+
+## Tecnologia
+
+- Inteligência artificial para resumos de documentos legislativos
+- Categorização automática de leis, decretos e portarias
+- Atualização periódica dos dados via sincronização com fontes oficiais
+- Interface responsiva e acessível (PWA)
+- Controle de tamanho de fonte para acessibilidade
+
+## Contato e Redes Sociais
+
+- **Site**: [morrinhos.ai](https://morrinhos.ai)
+- **Instagram**: [@morrinhos.ai](https://www.instagram.com/morrinhos.ai)
+
+---
+
+*Morrinhos.ai é um projeto independente de transparência pública. Não possui vínculo com órgãos governamentais. Dados sujeitos a atualização conforme disponibilidade nas fontes oficiais.*

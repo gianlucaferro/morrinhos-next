@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX idx_saude_indicadores_unique ON public.saude_indicadores(categoria, indicador, ano, COALESCE(mes, 0), COALESCE(semana_epidemiologica, 0));

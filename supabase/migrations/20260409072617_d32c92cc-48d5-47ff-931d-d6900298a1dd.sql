@@ -1,0 +1,1 @@
+ALTER TABLE remuneracao_servidores ADD COLUMN IF NOT EXISTS tipo_folha TEXT DEFAULT 'NORMAL';

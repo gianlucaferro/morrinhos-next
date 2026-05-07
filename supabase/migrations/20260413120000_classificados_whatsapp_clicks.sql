@@ -1,0 +1,1 @@
+ALTER TABLE classificados ADD COLUMN IF NOT EXISTS whatsapp_clicks INTEGER DEFAULT 0;

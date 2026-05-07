@@ -1,0 +1,2 @@
+ALTER TABLE public.camara_contratos ADD CONSTRAINT camara_contratos_centi_id_key UNIQUE (centi_id);
+ALTER TABLE public.camara_licitacoes ADD CONSTRAINT camara_licitacoes_centi_id_key UNIQUE (centi_id);

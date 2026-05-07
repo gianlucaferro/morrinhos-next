@@ -1,0 +1,1 @@
+ALTER TABLE public.atuacao_parlamentar ADD COLUMN resumo text;
