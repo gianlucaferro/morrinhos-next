@@ -1,3 +1,9 @@
+// 🚨 PARTIAL: esta função consome contratos da tabela contratos/contratos_aditivos.
+// O código tem refs a fonte_url do Centi (camaramorrinhos.centi.com.br) que NÃO existem
+// pra Morrinhos. Quando os scrapers NucleoGov forem implementados e gravarem fonte_url
+// no formato NucleoGov, esta função precisa ser ajustada também.
+// Doc: docs/HANDOFF_MORRINHOS.md → seção "Scrapers Centi → NucleoGov"
+//
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {

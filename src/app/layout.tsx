@@ -120,10 +120,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${jakarta.variable} font-md`}>
       <head>
-        <link rel="dns-prefetch" href="https://oinweocqcptwxqsztlcl.supabase.co" />
+        <link rel="dns-prefetch" href="https://pgqztmtimakiikcsvfph.supabase.co" />
         <link
           rel="preconnect"
-          href="https://oinweocqcptwxqsztlcl.supabase.co"
+          href="https://pgqztmtimakiikcsvfph.supabase.co"
           crossOrigin="anonymous"
         />
         <script

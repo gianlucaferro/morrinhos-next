@@ -1,3 +1,8 @@
+// 🚨 DISABLED: esta função aponta pra Centi (sistema usado pelo Piracanjuba).
+// Morrinhos NÃO usa Centi — usa NucleoGov + WordPress oficial.
+// Estado: NÃO DEPLOYAR até reescrever para a fonte certa.
+// Doc: docs/HANDOFF_MORRINHOS.md → seção "Scrapers Centi → NucleoGov"
+//
 // supabase/functions/sync-frota-veiculos/index.ts
 // CRON: toda segunda-feira às 06:00 BRT (09:00 UTC)
 // schedule: "0 9 * * 1"

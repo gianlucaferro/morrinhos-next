@@ -11,10 +11,10 @@ Wrapper compartilhado em `_shared/ai.ts` centraliza a chamada e fornece `corsHea
 
 ## Secrets necessários
 
-Configurar no Supabase (`oinweocqcptwxqsztlcl`) via Dashboard → Project Settings → Edge Functions → Secrets, ou via CLI:
+Configurar no Supabase (`pgqztmtimakiikcsvfph`) via Dashboard → Project Settings → Edge Functions → Secrets, ou via CLI:
 
 ```bash
-supabase secrets set GEMINI_API_KEY="$(op read 'op://Dev/Gemini API Key/credential')" --project-ref oinweocqcptwxqsztlcl
+supabase secrets set GEMINI_API_KEY="$(op read 'op://Dev/Gemini API Key/credential')" --project-ref pgqztmtimakiikcsvfph
 ```
 
 | Secret | Origem | Usado em |
@@ -82,10 +82,10 @@ Bloqueios remanescentes Lovable nas 62: `auth-email-hook` (3 imports `@lovable.d
 ```bash
 # Após configurar GEMINI_API_KEY no Supabase:
 cd morrinhos-next
-supabase link --project-ref oinweocqcptwxqsztlcl
+supabase link --project-ref pgqztmtimakiikcsvfph
 supabase functions deploy --no-verify-jwt   # (sem JWT mantém compatibilidade com chamadas atuais)
 ```
 
 ## Rollback
 
-Se algo der errado, basta apontar `LOVABLE_API_KEY` de volta no projeto antigo (`uulpqmylqnonbxozdbtb`) — as functions antigas continuam intactas no repositório `gianlucaferro/morrinhos` (Lovable).
+Se algo der errado, basta apontar `LOVABLE_API_KEY` de volta no projeto antigo (`pgqztmtimakiikcsvfph`) — as functions antigas continuam intactas no repositório `gianlucaferro/morrinhos` (Lovable).

@@ -1,3 +1,8 @@
+// 🚨 DISABLED: esta função aponta pra Centi (sistema usado pelo Piracanjuba).
+// Morrinhos NÃO usa Centi — usa NucleoGov + WordPress oficial.
+// Estado: NÃO DEPLOYAR até reescrever para a fonte certa.
+// Doc: docs/HANDOFF_MORRINHOS.md → seção "Scrapers Centi → NucleoGov"
+//
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
