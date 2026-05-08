@@ -104,6 +104,19 @@ public/favicon.ico                   ← brasão de Piracanjuba
 - **Zap MHS** (estabelecimentos) — começar vazio, popular via admin.
 - **Bairros** — atualmente o sistema usa lista de bairros de Piracanjuba. Substituir pela lista de Morrinhos quando for povoar Compra e Venda / Zap.
 
+### 3.1 Dados hardcoded específicos de Piracanjuba que ainda renderizam (achados no preview)
+
+Foram identificados na renderização da home itens específicos de Piracanjuba que estão **hardcoded em arquivos** (não vêm do DB) e precisam ser substituídos pelos equivalentes de Morrinhos:
+
+| Item | Arquivo | Substituir por |
+|---|---|---|
+| Drogarias plantão (Central, Nacional, Droganova, Oriental) | `src/data/plantaoFarmacias.ts` + `src/components/admin/FarmaciaFotosAdmin.tsx` | Lista real de farmácias de Morrinhos com calendário oficial Sec. Saúde |
+| PM (64) 99971-9063 | `src/app/page.tsx`, `src/app/contatos/page.tsx`, `src/app/seguranca/SegurancaClient.tsx` | Número da PM local de Morrinhos |
+| Bombeiros (62) 98494-0249 | mesmos arquivos | Número dos Bombeiros de Morrinhos |
+| Troca de Lâmpada (64) 93300-8200 | `src/app/page.tsx`, `src/app/contatos/page.tsx` | Plantão de iluminação pública de Morrinhos |
+
+**Importante**: telefones com DDD 64 são da região sul de Goiás (engloba Piracanjuba e Morrinhos), mas os **números específicos** são de Piracanjuba. Substituir antes do go-live público.
+
 ### 4. Database (Supabase) — usuário vai criar manualmente
 
 Quando o projeto Supabase Morrinhos.Ai estiver criado:

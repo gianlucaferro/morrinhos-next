@@ -2,7 +2,7 @@
 
 O arquivo `20260503112956_morrinhos_lovable_data_dump.sql` foi removido do Git por ser grande (15MB / 29.381 INSERTs).
 
-Estado: **aplicado com sucesso ao Supabase `oinweocqcptwxqsztlcl` em 2026-05-03 via `supabase db push`.**
+Estado: **aplicado com sucesso ao Supabase `pgqztmtimakiikcsvfph` em 2026-05-03 via `supabase db push`.**
 
 Ações executadas antes do push:
 - Removido `\restrict` / `\unrestrict` (comandos psql, não SQL).

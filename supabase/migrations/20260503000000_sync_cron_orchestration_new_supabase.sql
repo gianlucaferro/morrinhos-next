@@ -1,5 +1,5 @@
 -- =============================================================================
--- SYNC CRON ORCHESTRATION (Supabase novo: oinweocqcptwxqsztlcl)
+-- SYNC CRON ORCHESTRATION (Supabase novo: pgqztmtimakiikcsvfph)
 -- Migra os 49 cron jobs do projeto antigo (Lovable) para o novo.
 -- URL e anon key vão hardcoded — anon key é pública por design (exposta no frontend).
 -- Para rotação no futuro: editar a constante PROJ_URL/ANON_KEY na função abaixo.
@@ -13,8 +13,8 @@ SECURITY DEFINER
 SET search_path = public
 AS $$
 DECLARE
-  proj_url TEXT := 'https://oinweocqcptwxqsztlcl.supabase.co';
-  anon_key TEXT := 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9pbndlb2NxY3B0d3hxc3p0bGNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4MDA2NTUsImV4cCI6MjA5MzM3NjY1NX0.TFstJJgPZDauChUdhuBAcL8KX5FtGONaVNao7FU5lMQ';
+  proj_url TEXT := 'https://pgqztmtimakiikcsvfph.supabase.co';
+  anon_key TEXT := 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBncXp0bXRpbWFraWlrY3N2ZnBoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMDE3NTEsImV4cCI6MjA5Mzc3Nzc1MX0.7EPa5iAoAXBacIjsazHqswF2RNgOlirIlkkhuHFFzlw';
   request_id BIGINT;
 BEGIN
   SELECT net.http_post(
