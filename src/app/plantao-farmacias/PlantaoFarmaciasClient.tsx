@@ -67,6 +67,19 @@ export default function PlantaoFarmaciasClient({
 
   const getMeta = (nome: string) => metaByName.get(nome) ?? metaByName.get(normalize(nome));
 
+  if (PLANTAO_FARMACIAS.length === 0) {
+    return (
+      <div className="rounded-lg border border-border bg-muted/30 p-8 text-center">
+        <p className="text-base font-medium text-foreground">Em breve</p>
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground max-w-lg mx-auto">
+          Estamos coletando o calendário oficial de plantão de farmácias de Morrinhos
+          junto à Vigilância Sanitária Municipal. Em emergência, ligue para o SAMU{" "}
+          <a href="tel:192" className="text-primary underline">192</a>.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {grouped.map(([mesAno, semanas]) => (

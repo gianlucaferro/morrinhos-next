@@ -139,7 +139,7 @@ function ServidoresCamaraTab() {
           <p className="text-sm text-muted-foreground mt-1">
             Os dados serão sincronizados automaticamente do portal de transparência legislativo.
           </p>
-          <a href="https://camaramorrinhos.centi.com.br/servidor/remuneracao" target="_blank" rel="noopener noreferrer"
+          <a href="https://acessoainformacao.morrinhos.go.leg.br/cidadao/transparencia/mgservidores" target="_blank" rel="noopener noreferrer"
             className="text-xs text-primary hover:underline mt-2 inline-block">
             Ver fonte original →
           </a>
@@ -237,7 +237,7 @@ function TransmissaoTab() {
         <p className="text-sm text-muted-foreground mt-2">
           A transmissão ao vivo visa oferecer maior transparência e comodidade aos cidadãos que não podem comparecer presencialmente ao plenário.
         </p>
-        <a href="https://camarademorrinhos.go.gov.br/transmissao-das-sessoes/" target="_blank" rel="noopener noreferrer"
+        <a href="https://morrinhos.go.leg.br/transmissao-das-sessoes/" target="_blank" rel="noopener noreferrer"
           className="text-xs text-primary hover:underline mt-3 inline-block">
           Ver página oficial →
         </a>

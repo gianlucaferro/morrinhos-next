@@ -9,40 +9,16 @@ import { Input } from "@/components/ui/input";
 import { Upload, Check, Loader2, Image, Trash2, Pencil, Save, Phone, X } from "lucide-react";
 import { toast } from "sonner";
 
-const FARMACIAS = [
-  "Drogaria Bem Estar", "Drogaria do Povo", "Drogaria Nacional",
-  "Drogaria São José", "Drogaria São Sebastião",
-  "Drogaria Santa Luzia", "Drogamais", "Droganova",
-  "Drogaria Central", "Drogaria Preço Popular", "Drogaria Marina",
-  "Farma Vidda", "Drogaria JM Popular", "Drogaria Machado",
-  "Drogaria Oriental", "Drogaria São Pedro", "Drogaria Aliança",
-  "Drogaria Do Lar", "Drogaria Santa Rita", "Drogaria Morrinhos",
-];
+// Lista de farmácias de plantão de Morrinhos.
+// TODO: Coletar lista oficial com a Vigilância Sanitária Municipal de Morrinhos
+// e popular este array. O componente abaixo automaticamente vai criar slots
+// upload/edit pra cada uma.
+const FARMACIAS: string[] = [];
 
-// Default phones from hardcoded data
-const DEFAULT_PHONES: Record<string, string> = {
-  "Drogaria Bem Estar": "(64) 99280-9691",
-  "Drogaria do Povo": "(64) 99218-0444",
-  "Drogaria Nacional": "(64) 3405-1815",
-  "Drogaria São José": "(64) 3405-3093",
-  
-  "Drogaria São Sebastião": "(64) 3405-1734",
-  "Drogaria Santa Luzia": "(64) 3405-3028",
-  "Drogamais": "(64) 99265-4341",
-  "Droganova": "(64) 99607-4282",
-  "Drogaria Central": "(64) 99327-9097",
-  "Drogaria Preço Popular": "(64) 3405-5401",
-  "Drogaria Marina": "(64) 99334-3139",
-  "Farma Vidda": "(64) 99237-3232",
-  "Drogaria JM Popular": "(64) 99203-0312",
-  "Drogaria Machado": "(64) 3405-1859",
-  "Drogaria Oriental": "(64) 3405-5779",
-  "Drogaria São Pedro": "(64) 99246-4938",
-  "Drogaria Aliança": "(64) 3405-2252",
-  "Drogaria Do Lar": "(64) 3405-1448",
-  "Drogaria Santa Rita": "(64) 3405-1361",
-  "Drogaria Morrinhos": "(64) 3405-1441",
-};
+// Telefones default. Os números do template (de Piracanjuba) foram removidos
+// pra evitar publicar contatos errados. Quando coletarmos a lista oficial,
+// preencher com telefones reais.
+const DEFAULT_PHONES: Record<string, string> = {};
 
 type FarmaciaRow = { id: string; foto_url: string | null; telefone: string | null; tipo_telefone: string | null };
 

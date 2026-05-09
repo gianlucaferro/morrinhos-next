@@ -283,13 +283,17 @@ function ComparisonChart({ data, ano }: { data: SegurancaIndicador[]; ano: numbe
 }
 
 function EmergencyNumbers() {
+  // Contatos locais (PM/Bombeiros direto, Delegacia) ainda não confirmados pra Morrinhos.
+  // Por enquanto, exibe apenas os 4 números federais/estaduais de emergência (válidos pra
+  // qualquer município brasileiro).
+  // TODO: adicionar PM Morrinhos, Bombeiros Morrinhos e Delegacia regional quando forem
+  // coletados oficialmente.
   const numbers = [
     { name: "Polícia Militar", number: "190", desc: "Emergências e crimes em andamento", whatsapp: null },
-    { name: "PM Morrinhos (WhatsApp)", number: "(64) 99971-9063", desc: "Contato direto com a PM local", whatsapp: "5564999719063" },
-    { name: "Bombeiros Morrinhos", number: "(62) 98494-0249", desc: "WhatsApp direto", whatsapp: "5562984940249" },
+    { name: "Bombeiros", number: "193", desc: "Incêndios e resgate", whatsapp: null },
     { name: "SAMU", number: "192", desc: "Emergências médicas", whatsapp: null },
     { name: "Polícia Civil", number: "197", desc: "Denúncias e registros de ocorrência", whatsapp: null },
-    { name: "Delegacia de Morrinhos", number: "(64) 3405-1275", desc: "Delegacia Regional", whatsapp: null },
+    { name: "Defesa Civil", number: "199", desc: "Desastres naturais e riscos", whatsapp: null },
     { name: "Disque Denúncia", number: "181", desc: "Denúncias anônimas", whatsapp: null },
   ];
 

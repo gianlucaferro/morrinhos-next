@@ -207,52 +207,45 @@ export default async function HomePage() {
         {/* Alerta Dengue */}
         <DengueAlert />
 
-        {/* Contatos Úteis (resumo) */}
+        {/* Contatos Úteis (resumo) — bloco escondido até termos contatos oficiais de Morrinhos.
+            TODO: substituir pelos números reais quando coletados (ver src/app/contatos/page.tsx). */}
         <section aria-labelledby="heading-contatos">
           <div className="flex items-center justify-between mb-4">
             <h2 id="heading-contatos" className="text-lg font-semibold text-foreground flex items-center gap-2">
               <Phone className="w-5 h-5 text-primary" />
-              Contatos Úteis
+              Contatos de Emergência
             </h2>
             <Link href="/contatos" className="text-xs text-primary hover:underline flex items-center gap-1">
               Ver todos <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <a href="https://wa.me/5564999719063" target="_blank" rel="noopener noreferrer" className="stat-card card-hover flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-[#25D366]/10">
-                <WhatsAppIcon className="w-5 h-5" />
+            <a href="tel:190" className="stat-card card-hover flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-primary/10">
+                <Phone className="w-5 h-5 text-primary" />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium text-foreground">Polícia Militar</p>
-                <p className="text-xs text-muted-foreground">(64) 99971-9063</p>
+                <p className="text-xs text-muted-foreground">190</p>
               </div>
-              <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
             </a>
-            <a href="https://wa.me/5562984940249" target="_blank" rel="noopener noreferrer" className="stat-card card-hover flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-[#25D366]/10">
-                <WhatsAppIcon className="w-5 h-5" />
+            <a href="tel:193" className="stat-card card-hover flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-primary/10">
+                <Phone className="w-5 h-5 text-primary" />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium text-foreground">Bombeiros</p>
-                <p className="text-xs text-muted-foreground">(62) 98494-0249</p>
+                <p className="text-xs text-muted-foreground">193</p>
               </div>
-              <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
             </a>
-            <a
-              href={`https://wa.me/5564933008200?text=${encodeURIComponent("Olá, gostaria de solicitar a troca de lâmpada de poste.\n\nNúmero do poste: \n\nEndereço: \n\nAnexe foto do local.")}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="stat-card card-hover flex items-center gap-3 group"
-            >
-              <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-[#25D366]/10">
-                <WhatsAppIcon className="w-5 h-5" />
+            <a href="tel:192" className="stat-card card-hover flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-primary/10">
+                <Phone className="w-5 h-5 text-primary" />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-foreground">Troca de Lâmpada de Poste</p>
-                <p className="text-xs text-muted-foreground">(64) 93300-8200</p>
+                <p className="text-sm font-medium text-foreground">SAMU</p>
+                <p className="text-xs text-muted-foreground">192</p>
               </div>
-              <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
             </a>
           </div>
         </section>

@@ -1,8 +1,3 @@
-// 🚨 DISABLED: esta função aponta pra Centi (sistema usado pelo Piracanjuba).
-// Morrinhos NÃO usa Centi — usa NucleoGov + WordPress oficial.
-// Estado: NÃO DEPLOYAR até reescrever para a fonte certa.
-// Doc: docs/HANDOFF_MORRINHOS.md → seção "Scrapers Centi → NucleoGov"
-//
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
@@ -194,6 +189,15 @@ async function fetchFolha(idorgao: number, mes: number, ano: number): Promise<Sc
 }
 
 Deno.serve(async (req) => {
+  // 🚨 KILL-SWITCH: esta função depende de fonte (Centi) que NÃO existe pra Morrinhos.
+  // Está bloqueada via env DISABLED=true até ser reescrita pra NucleoGov.
+  if (Deno.env.get("DISABLED") === "true") {
+    return new Response(
+      JSON.stringify({ ok: false, disabled: true, reason: "needs_nucleogov_rewrite" }),
+      { status: 503, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   const url = new URL(req.url);

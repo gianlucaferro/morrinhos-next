@@ -1,9 +1,3 @@
-// 🚨 PARTIAL: esta função consome contratos da tabela contratos/contratos_aditivos.
-// O código tem refs a fonte_url do Centi (camaramorrinhos.centi.com.br) que NÃO existem
-// pra Morrinhos. Quando os scrapers NucleoGov forem implementados e gravarem fonte_url
-// no formato NucleoGov, esta função precisa ser ajustada também.
-// Doc: docs/HANDOFF_MORRINHOS.md → seção "Scrapers Centi → NucleoGov"
-//
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
@@ -159,6 +153,15 @@ async function fetchAndExtractPdf(pdfUrls: string[]): Promise<string | null> {
 }
 
 Deno.serve(async (req) => {
+  // 🚨 KILL-SWITCH: esta função depende de fonte (Centi) que NÃO existe pra Morrinhos.
+  // Está bloqueada via env DISABLED=true até ser reescrita pra NucleoGov.
+  if (Deno.env.get("DISABLED") === "true") {
+    return new Response(
+      JSON.stringify({ ok: false, disabled: true, reason: "needs_nucleogov_rewrite" }),
+      { status: 503, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }

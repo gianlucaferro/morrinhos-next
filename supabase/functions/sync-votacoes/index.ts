@@ -7,7 +7,7 @@ const corsHeaders = {
 };
 
 const UA = "morrinhos.ai/1.0 (transparencia legislativa)";
-const VOTACOES_URL = "https://acessoainformacao.camarademorrinhos.go.gov.br/acesso-aos-resultados-das-votacoes/";
+const VOTACOES_URL = "https://morrinhos.go.leg.br";
 
 interface ScrapedVotacao {
   titulo: string;
@@ -62,8 +62,7 @@ function parseVotacoesHtml(html: string): ScrapedVotacao[] {
         titulo: titleMatch[1].trim(),
         data,
         resultado,
-        fonte_url: fonteUrl.startsWith("http") ? fonteUrl : `https://acessoainformacao.camarademorrinhos.go.gov.br${fonteUrl}`,
-      });
+        fonte_url: fonteUrl.startsWith("http") ? fonteUrl : `https://morrinhos.go.leg.br      });
     }
   }
 

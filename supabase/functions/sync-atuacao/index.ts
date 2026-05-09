@@ -52,7 +52,7 @@ async function scrapeDescriptionsFromListing(): Promise<Map<string, string>> {
   const descs = new Map<string, string>();
   try {
     const resp = await fetch(
-      "https://acessoainformacao.camarademorrinhos.go.gov.br/atuacao-parlamentar/",
+      "https://morrinhos.go.leg.br",
       { headers: { "User-Agent": "seuvereador.ai/1.0 (transparencia legislativa)" } }
     );
     if (!resp.ok) return descs;
@@ -108,7 +108,7 @@ Deno.serve(async (req) => {
     // Scrape listing page for descriptions (recent items)
     const descriptions = await scrapeDescriptionsFromListing();
 
-    const WP_API = "https://acessoainformacao.camarademorrinhos.go.gov.br/wp-json/wp/v2";
+    const WP_API = "https://morrinhos.go.leg.br";
 
     // Batch upsert approach: collect all items, then batch insert
     for (const [tipoId, tipoLabel] of Object.entries(TIPO_IDS)) {

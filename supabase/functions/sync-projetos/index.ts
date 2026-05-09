@@ -183,7 +183,7 @@ Deno.serve(async (req) => {
     );
 
     // Fetch the main projects page (HTML) 
-    const url = "https://acessoainformacao.camarademorrinhos.go.gov.br/projetos-de-leis/";
+    const url = "https://morrinhos.go.leg.br";
     console.log("Fetching:", url);
 
     let response;

@@ -438,7 +438,7 @@ function ServidoresTab({ initialSearch }: { initialSearch?: string }) {
       {!isLoading && !servidores.length && (
         <EmptyState icon={Users} title="Sem dados de servidores"
           description="Os dados de servidores e remuneração serão adicionados quando disponíveis no portal de transparência."
-          fonteUrl="https://morrinhos.centi.com.br/" />
+          fonteUrl="https://morrinhos.go.gov.br/" />
       )}
       {servidores.length > 0 && (
         <div className="space-y-2">
@@ -526,7 +526,7 @@ function GastosTab() {
   if (!data?.length) {
     return <EmptyState icon={DollarSign} title="Sem dados de despesas"
       description="Os dados de gastos serão adicionados quando disponíveis no portal de transparência."
-      fonteUrl="https://morrinhos.centi.com.br/" />;
+      fonteUrl="https://morrinhos.go.gov.br/" />;
   }
   return (
     <div className="space-y-2">
@@ -695,7 +695,7 @@ function ContratosTab() {
   if (!data?.length) {
     return <EmptyState icon={FileText} title="Sem dados de contratos"
       description="Os dados de contratos serão adicionados quando disponíveis no portal de transparência."
-      fonteUrl="https://morrinhos.centi.com.br/" />;
+      fonteUrl="https://morrinhos.go.gov.br/" />;
   }
 
   // Extract available years from data
@@ -946,7 +946,7 @@ function LicitacoesTab() {
   if (!data?.length) {
     return <EmptyState icon={Gavel} title="Sem dados de licitações"
       description="Os dados de licitações serão sincronizados automaticamente do portal de transparência."
-      fonteUrl="https://morrinhos.centi.com.br/" />;
+      fonteUrl="https://morrinhos.go.gov.br/" />;
   }
   return (
     <>
@@ -1085,7 +1085,7 @@ function DiariasTab() {
   if (!data?.length) {
     return <EmptyState icon={Briefcase} title="Sem dados de diárias"
       description="Os dados de diárias e viagens serão sincronizados automaticamente do portal de transparência."
-      fonteUrl="https://morrinhos.centi.com.br/" />;
+      fonteUrl="https://morrinhos.go.gov.br/" />;
   }
   return (
     <div className="space-y-4">
@@ -1183,7 +1183,7 @@ function ObrasTab() {
   if (!data?.length) {
     return <EmptyState icon={HardHat} title="Sem dados de obras"
       description="Os dados de obras públicas serão sincronizados automaticamente do portal de transparência."
-      fonteUrl="https://morrinhos.centi.com.br/" />;
+      fonteUrl="https://morrinhos.go.gov.br/" />;
   }
   const statusColors: Record<string, string> = {
     em_andamento: "bg-info/15 text-info",
@@ -1469,7 +1469,7 @@ function AdminPanel() {
   );
 }
 
-const LEI_ORGANICA_PORTAL_URL = "https://camaramorrinhos.centi.com.br/transparencia/atosadministrativos";
+const LEI_ORGANICA_PORTAL_URL = "https://acessoainformacao.morrinhos.go.leg.br/cidadao/legislacao/portarias";
 
 type LeiOrganicaDoc = {
   id: string;
@@ -2780,7 +2780,7 @@ function ProcuradoriaTab() {
   if (!procuradores?.length) {
     return <EmptyState icon={Gavel} title="Sem dados da Procuradoria"
       description="Nenhum servidor com cargo de Procurador encontrado no portal de transparência."
-      fonteUrl="https://morrinhos.centi.com.br/" />;
+      fonteUrl="https://morrinhos.go.gov.br/" />;
   }
 
   return (
@@ -2836,7 +2836,7 @@ function ProcuradoriaTab() {
         })}
       </div>
       <p className="text-xs text-muted-foreground">
-        Fonte: <a href="https://morrinhos.centi.com.br/" target="_blank" rel="noopener noreferrer"
+        Fonte: <a href="https://morrinhos.go.gov.br/" target="_blank" rel="noopener noreferrer"
           className="text-primary hover:underline inline-flex items-center gap-1">
           <ExternalLink className="w-3 h-3" /> Portal de Transparência
         </a>

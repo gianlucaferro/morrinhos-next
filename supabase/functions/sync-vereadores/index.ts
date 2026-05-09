@@ -7,8 +7,8 @@ const corsHeaders = {
 };
 
 const UA = "morrinhos.ai/1.0 (transparencia municipal)";
-const WP_API = "https://acessoainformacao.camarademorrinhos.go.gov.br/wp-json/wp/v2";
-const VEREADORES_PAGE = "https://acessoainformacao.camarademorrinhos.go.gov.br/vereadores/";
+const WP_API = "https://morrinhos.go.leg.br";
+const VEREADORES_PAGE = "https://morrinhos.go.leg.br";
 
 // Map WP slugs to our DB slugs
 const SLUG_MAP: Record<string, string> = {

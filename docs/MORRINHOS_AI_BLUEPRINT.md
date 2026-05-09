@@ -761,7 +761,7 @@ Chave reutilizável: `46a581837ee2463ea50d40b6895646bc`
 | **Câmara — vereadores** | 11 | A confirmar (geralmente 9-11 em cidades 50k) |
 | **Vizinhos limítrofes** | Bela Vista de Goiás, Caldas Novas, Cristianópolis, Hidrolândia, Pontalina, Mairipotaba, Professor Jamil, Santa Cruz de Goiás | Caldas Novas, Pontalina, Água Limpa, Marzagão, Rio Quente, Goiatuba (parte) |
 | **Site oficial Prefeitura** | morrinhos.go.gov.br | morrinhos.go.gov.br |
-| **Câmara — site** | camarademorrinhos.go.gov.br | A descobrir (provável `camaramorrinhos.go.gov.br` ou similar) |
+| **Câmara — site** | morrinhos.go.leg.br | A descobrir (provável `camaramorrinhos.go.gov.br` ou similar) |
 
 ### 13.2 Comparativo cidades (`getPibComparativo` em `src/lib/data/economia.ts`)
 

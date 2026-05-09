@@ -39,7 +39,9 @@ function normalizeFarmaciaMeta(meta: {
 
 function SchemaMarkup() {
   const idx = getSemanaAtual();
+  if (idx < 0) return null;
   const semana = PLANTAO_FARMACIAS[idx];
+  if (!semana) return null;
   const allFarmacias = [semana.farmacia24h, ...semana.demais];
 
   const schema = {

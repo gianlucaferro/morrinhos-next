@@ -18,63 +18,17 @@ type ContatoItem = {
   url?: string;
 };
 
-const contatos: { categoria: string; itens: ContatoItem[] }[] = [
-  {
-    categoria: "Segurança",
-    itens: [
-      { nome: "Polícia Militar 1", numero: "5564999719063", display: "(64) 99971-9063" },
-      { nome: "Polícia Militar 2", numero: "5564999714141", display: "(64) 99971-4141" },
-      { nome: "CPE 10 (GPT)", numero: "5564999713304", display: "(64) 99971-3304" },
-      { nome: "Bombeiros Morrinhos", numero: "5562984940249", display: "(62) 98494-0249" },
-      { nome: "Delegacia de Polícia Civil", numero: "556434052014", display: "(64) 3405-2014" },
-      {
-        nome: "Delegacia Virtual (Registre Ocorrência Online)",
-        numero: "",
-        display: "raivirtual.ssp.go.gov.br",
-        tipo: "link",
-        url: "https://raivirtual.ssp.go.gov.br/#/",
-      },
-      {
-        nome: "Conselho Tutelar",
-        numero: "5564999621487",
-        display: "(64) 99962-1487",
-        tipo: "telefone",
-      },
-    ],
-  },
-  {
-    categoria: "Saúde",
-    itens: [
-      { nome: "Base do SAMU", numero: "5564996265935", display: "(64) 99626-5935", tipo: "telefone" },
-      { nome: "CAPS", numero: "5564996269555", display: "(64) 99626-9555" },
-    ],
-  },
-  {
-    categoria: "Serviços Públicos",
-    itens: [
-      { nome: "Prefeitura Municipal", numero: "556492382040", display: "(64) 9238-2040" },
-      { nome: "Secretaria de Obras", numero: "5564992437140", display: "(64) 99243-7140" },
-      { nome: "Secretaria Assistência Social", numero: "5564999558619", display: "(64) 99955-8619" },
-      { nome: "Secretaria de Esportes", numero: "5564999558619", display: "(64) 99955-8619" },
-      { nome: "CREAS", numero: "5564996023899", display: "(64) 99602-3899" },
-      { nome: "Cad Único / Bolsa Família", numero: "5564999849676", display: "(64) 99984-9676" },
-      { nome: "SINE", numero: "5564992970908", display: "(64) 99297-0908" },
-      { nome: "SAMARH", numero: "5564992980070", display: "(64) 99298-0070" },
-      { nome: "Gabinete Sec. Educação", numero: "5564920002303", display: "(64) 92000-2303" },
-      { nome: "Secretaria de Saúde", numero: "5564996015760", display: "(64) 9601-5760" },
-      { nome: "Secretaria de Educação", numero: "556434054069", display: "(64) 3405-4069", tipo: "telefone" },
-      { nome: "Clínica de Castração", numero: "5564920015516", display: "(64) 92001-5516" },
-      { nome: "Dept. Fiscalização e Postura", numero: "5564920002295", display: "(64) 92000-2295" },
-      {
-        nome: "Troca de Lâmpada de Poste",
-        numero: "5564933008200",
-        display: "(64) 93300-8200",
-        mensagem:
-          "Olá, gostaria de solicitar a troca de lâmpada de poste.\n\nNúmero do poste: \n\nEndereço: \n\nAnexe foto do local.",
-      },
-    ],
-  },
-];
+// Lista oficial de contatos de Morrinhos pendente.
+// Os números do template original eram de Piracanjuba e foram removidos
+// pra evitar publicar telefones errados pra moradores de Morrinhos.
+//
+// TODO: Coletar telefones oficiais com a Prefeitura/Câmara de Morrinhos
+// e popular as 3 categorias (Segurança, Saúde, Serviços Públicos).
+// Fontes a consultar:
+//   - Prefeitura: https://morrinhos.go.gov.br/
+//   - Câmara: https://morrinhos.go.leg.br/
+//   - Carta de Serviços ao Cidadão: https://acessoainformacao.morrinhos.go.gov.br/
+const contatos: { categoria: string; itens: ContatoItem[] }[] = [];
 
 export default function ContatosUteisPage() {
   return (
@@ -88,6 +42,25 @@ export default function ContatosUteisPage() {
           Telefones e WhatsApp de serviços públicos essenciais de Morrinhos.
         </p>
       </div>
+
+      {contatos.length === 0 && (
+        <div className="stat-card text-center py-12 max-w-2xl mx-auto">
+          <p className="text-base font-medium text-foreground">
+            Em breve
+          </p>
+          <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
+            Estamos coletando os telefones oficiais de Morrinhos junto à Prefeitura,
+            Câmara e órgãos municipais. Em caso de emergência, ligue:
+          </p>
+          <ul className="text-sm text-foreground mt-4 inline-block text-left space-y-1">
+            <li>• <strong>Polícia Militar:</strong> 190</li>
+            <li>• <strong>SAMU:</strong> 192</li>
+            <li>• <strong>Bombeiros:</strong> 193</li>
+            <li>• <strong>Defesa Civil:</strong> 199</li>
+            <li>• <strong>Disque-Denúncia:</strong> 181</li>
+          </ul>
+        </div>
+      )}
 
       {contatos.map((grupo) => (
         <section key={grupo.categoria}>

@@ -94,7 +94,7 @@ CREATE TABLE public.presenca_sessoes (
   vereador_id uuid REFERENCES public.vereadores(id),
   vereador_nome text,
   presente boolean DEFAULT true,
-  fonte_url text DEFAULT 'https://acessoainformacao.camarademorrinhos.go.gov.br/lista-de-presenca/',
+  fonte_url text DEFAULT 'https://morrinhos.go.leg.br',
   wp_post_id integer,
   updated_at timestamptz NOT NULL DEFAULT now()
 );

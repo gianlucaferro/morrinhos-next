@@ -62,12 +62,12 @@ export function VereadoresContent() {
         <div className="mb-6 p-4 rounded-lg bg-muted/50 border border-border text-sm text-muted-foreground">
           <p>
             Dados extraídos do{" "}
-            <a href="https://acessoainformacao.camarademorrinhos.go.gov.br/projetos-de-leis/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+            <a href="https://morrinhos.go.leg.br" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
               portal oficial da Câmara de Morrinhos
             </a>
             {" "}e do{" "}
-            <a href="https://camaramorrinhos.centi.com.br/transparencia/atosadministrativos/5" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-              portal de transparência Centi
+            <a href="https://acessoainformacao.morrinhos.go.leg.br/cidadao/legislacao/leis" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+              portal de transparência NucleoGov
             </a>
             . Vereadores com zero projetos ainda não apresentaram proposições nesta legislatura (2025–2028).
           </p>

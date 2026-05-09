@@ -9,7 +9,7 @@ CREATE TABLE public.atuacao_parlamentar (
   descricao TEXT NOT NULL,
   autor_texto TEXT NOT NULL,
   autor_vereador_id UUID REFERENCES public.vereadores(id),
-  fonte_url TEXT NOT NULL DEFAULT 'https://acessoainformacao.camarademorrinhos.go.gov.br/atuacao-parlamentar/',
+  fonte_url TEXT NOT NULL DEFAULT 'https://morrinhos.go.leg.br',
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   UNIQUE(tipo, numero, ano)

@@ -368,7 +368,7 @@ export default function VeiculosTab() {
               })}
               {" · "}
               <a
-                href="https://morrinhos.centi.com.br/transparencia/veiculos"
+                href="https://acessoainformacao.morrinhos.go.gov.br/cidadao/transparencia/frota"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline hover:text-blue-600 inline-flex items-center gap-1"
@@ -683,7 +683,7 @@ export default function VeiculosTab() {
       <p className="text-xs text-gray-400 text-center pt-2">
         Dados públicos extraídos do{" "}
         <a
-          href="https://morrinhos.centi.com.br/transparencia/veiculos"
+          href="https://acessoainformacao.morrinhos.go.gov.br/cidadao/transparencia/frota"
           target="_blank"
           rel="noopener noreferrer"
           className="underline hover:text-blue-600"
