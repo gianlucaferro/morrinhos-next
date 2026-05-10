@@ -7,27 +7,29 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+// Bairros REAIS de Morrinhos-GO (fonte: Prefeitura Municipal de Morrinhos /saude/ + /programacao-coleta-de-lixo-domestico-e-coleta-programada/)
+// Esquema "Morrinhos Mais Limpa" — Sec. de Obras Hugo Nunes, calendário oficial 2026
 const COLETA_COMUM: Record<string, string[]> = {
-  "Segunda-feira": ["Aeroporto","Aeroporto Sul","BNH","Bueno","Cascalho","Centro","Country Club","Ely Rocha","Estiva","Filismina","Jardim dos Buritis","Jardim Europa","Jardim Goiás 1 e 2","Jardim Primavera","Morrinhos","Pouso Alto","Primavera","São Francisco de Assis","São Vicente de Paula","Sebastião de Oliveira","Setor Boa Vista","Setor das Orquídeas","Setor Fernandes","Setor Lima","Setor Magalhães","Setor Norte","Setor Oeste","Setor Parque Machado","Setor Planalto","Setor Roberto","Vila União"],
-  "Terça-feira": ["Aeroporto","Aeroporto Sul","BNH","Bueno","Cascalho","Centro","Conjunto Pouso Alto","Corredor do Homero","Country Club","Ely Rocha","Estiva","Filismina","Jardim dos Buritis","Jardim Europa","Jardim Primavera","Pecuária","Morrinhos","Pouso Alto","Primavera","Recanto do Bosque","São Francisco de Assis","São Vicente de Paula","Sebastião de Oliveira","Setor Boa Vista","Setor das Orquídeas","Setor Fernandes","Setor Lima","Setor Magalhães","Setor Norte","Setor Oeste","Setor Parque Machado","Setor Planalto","Setor Roberto","Vila União"],
-  "Quarta-feira": ["Aeroporto","Aeroporto Sul","BNH","Bueno","Cascalho","Centro","Country Club","Ely Rocha","Estiva","Filismina","Jardim dos Buritis","Jardim Europa","Jardim Goiás 1 e 2","Jardim Primavera","Morrinhos","Pouso Alto","Primavera","São Francisco de Assis","São Vicente de Paula","Sebastião de Oliveira","Setor Boa Vista","Setor das Orquídeas","Setor Fernandes","Setor Lima","Setor Magalhães","Setor Norte","Setor Oeste","Setor Parque Machado","Setor Planalto","Setor Roberto","Vila União"],
-  "Quinta-feira": ["Aeroporto","Aeroporto Sul","BNH","Bueno","Cascalho","Centro","Country Club","Ely Rocha","Estiva","Filismina","Jardim dos Buritis","Jardim Europa","Jardim Goiás 1 e 2","Jardim Primavera","Morrinhos","Pouso Alto","Primavera","São Francisco de Assis","São Vicente de Paula","Sebastião de Oliveira","Setor Boa Vista","Setor das Orquídeas","Setor Fernandes","Setor Lima","Setor Magalhães","Setor Norte","Setor Oeste","Setor Parque Machado","Setor Planalto","Setor Roberto","Vila União"],
-  "Sexta-feira": ["Aeroporto","Aeroporto Sul","BNH","Bueno","Cascalho","Centro","Conjunto Pouso Alto","Country Club","Ely Rocha","Estiva","Filismina","Jardim dos Buritis","Jardim Europa","Jardim Goiás 1 e 2","Jardim Primavera","Pecuária","Morrinhos","Pouso Alto","Primavera","Recanto do Bosque","São Francisco de Assis","São Vicente de Paula","Sebastião de Oliveira","Setor Boa Vista","Setor das Orquídeas","Setor Fernandes","Setor Lima","Setor Magalhães","Setor Norte","Setor Oeste","Setor Parque Machado","Setor Planalto","Setor Roberto","Vila União"],
-  "Sábado": ["Av. Expedicionário","Cachoeira","Cargil","Centro","Contêineres","Grão Dourado","Rochedo","Silo da COAPIL"],
+  "Segunda-feira": ["Centro","Setor Sul","Vila Carmo","Vila Maria José","Sítio Jaqueline","Cristo Redentor","Setor Noroeste","Jardim Romano","Morro da Saudade"],
+  "Terça-feira": ["Setor Aeroporto","Bairro Aeroporto","Setor Industrial","Vila Ipanema","Jardim Goiás","Vila Soares","Jardim América","São Francisco de Assis","Santa Fé","Setor Santos Dumont I Etapa"],
+  "Quarta-feira": ["Centro","Setor Sul","Vila Carmo","Vila Maria José","Sítio Jaqueline","Cristo Redentor","Setor Noroeste","Jardim Romano","Morro da Saudade","Marcelânia (Distrito)","Rancho Alegre","Trevo de Pontalina"],
+  "Quinta-feira": ["Setor Aeroporto","Bairro Aeroporto","Setor Industrial","Vila Ipanema","Jardim Goiás","Vila Soares","Jardim América","São Francisco de Assis","Santa Fé","Setor Santos Dumont I Etapa"],
+  "Sexta-feira": ["Centro","Setor Sul","Vila Carmo","Vila Maria José","Sítio Jaqueline","Cristo Redentor","Setor Noroeste","Jardim Romano","Morro da Saudade"],
+  "Sábado": ["Setor Aeroporto","Bairro Aeroporto","Setor Industrial","Vila Ipanema","Jardim Goiás","Vila Soares","Jardim América","São Francisco de Assis","Santa Fé","Setor Santos Dumont I Etapa"],
 };
 
+// Coleta Seletiva Binária — separação secos (recicláveis) vs orgânicos
 const COLETA_SELETIVA: Record<string, string[]> = {
-  "Segunda-feira": ["Centro"],
-  "Sexta-feira": ["Centro"],
-  "Terça-feira": ["Jardim Goiás 1 e 2","BNH","Estiva","Jardim Primavera","São Vicente de Paula","Sebastião de Oliveira","Setor Boa Vista","Bueno","Setor Fernandes","Setor Magalhães","Setor Parque Machado","São Francisco de Assis"],
-  "Quarta-feira": ["Aeroporto","Cascalho","Jardim dos Buritis","Jardim Europa","Setor Oeste","Pouso Alto","Aeroporto Sul","Setor das Orquídeas","Setor Roberto"],
-  "Quinta-feira": ["Country Club","Ely Rocha","Filismina","Morrinhos","Primavera","Recanto do Bosque","Setor Lima","Setor Norte","Setor Planalto","Vila União"],
+  "Terça-feira": ["Centro"],
+  "Quarta-feira": ["Setor Aeroporto"],
+  "Quinta-feira": ["Vila Carmo","Bairro Aeroporto"],
+  "Sexta-feira": ["Setor Sul","Setor Industrial"],
 };
 
 const WEEK_ORDER = ["Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"];
 const WEEK_IDX: Record<string, number> = { "Segunda-feira":1,"Terça-feira":2,"Quarta-feira":3,"Quinta-feira":4,"Sexta-feira":5,"Sábado":6 };
 const EXEMPLOS = [
-  "Aeroporto","Aeroporto Sul","Av. Expedicionário","BNH","Bueno","Cachoeira","Cargil","Cascalho","Centro","Conjunto Pouso Alto","Contêineres","Corredor do Homero","Country Club","Ely Rocha","Estiva","Filismina","Grão Dourado","Jardim dos Buritis","Jardim Europa","Jardim Goiás 1 e 2","Jardim Primavera","Pecuária","Morrinhos","Pouso Alto","Primavera","Recanto do Bosque","Rochedo","São Francisco de Assis","São Vicente de Paula","Sebastião de Oliveira","Setor Boa Vista","Setor das Orquídeas","Setor Fernandes","Setor Lima","Setor Magalhães","Setor Norte","Setor Oeste","Setor Parque Machado","Setor Planalto","Setor Roberto","Silo da COAPIL","Vila União",
+  "Centro","Setor Aeroporto","Vila Carmo","Setor Sul","Vila Maria José","Bairro Aeroporto","Setor Industrial","Vila Ipanema","Jardim Goiás","Jardim América","Jardim Romano","Cristo Redentor","Setor Noroeste","Morro da Saudade","Santa Fé","São Francisco de Assis","Vila Soares","Sítio Jaqueline","Setor Santos Dumont I Etapa","Marcelânia (Distrito)","Rancho Alegre","Trevo de Pontalina",
 ];
 
 function norm(s: string) {
@@ -547,9 +549,24 @@ export default function ColetaLixoClient() {
             />
           </div>
 
+          <div className="bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950/30 dark:to-amber-900/20 border border-orange-200 dark:border-orange-800 rounded-xl p-4 space-y-2">
+            <div className="flex items-start gap-2.5">
+              <span className="text-2xl shrink-0">🚚</span>
+              <div className="flex-1">
+                <p className="text-sm font-bold text-orange-900 dark:text-orange-200">Coleta Programada de Entulho</p>
+                <p className="text-xs text-orange-800 dark:text-orange-300 mt-1 leading-relaxed">
+                  Projeto <strong>Morrinhos Mais Limpa</strong> recolhe entulho, móveis velhos, podas e galhos <strong>3 vezes por ano</strong> em todos os bairros (M1: jan-abr · M2: mai-ago · M3: set-dez). Coloque o material na calçada apenas <strong>2 dias antes</strong> da data prevista pela Sec. de Obras (Lei Complementar 083/2018).
+                </p>
+                <a href="https://morrinhos.go.gov.br/programacao-coleta-de-lixo-domestico-e-coleta-programada/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs font-semibold text-orange-900 dark:text-orange-100 hover:underline mt-1.5">
+                  Ver calendário completo da Prefeitura <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+            </div>
+          </div>
+
           <div className="bg-secondary/50 rounded-xl p-4 text-center space-y-0.5">
-            <p className="text-xs text-muted-foreground">Dados fornecidos pela Prefeitura Municipal de Morrinhos · 2025</p>
-            <p className="text-xs text-muted-foreground">Dúvidas? Entre em contato com a Prefeitura.</p>
+            <p className="text-xs text-muted-foreground">Dados fornecidos pela Prefeitura Municipal de Morrinhos · Secretaria de Obras · Calendário 2026</p>
+            <p className="text-xs text-muted-foreground">Dúvidas? Entre em contato com a Prefeitura: (64) 3417-2016</p>
           </div>
         </div>
       )}
