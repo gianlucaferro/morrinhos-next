@@ -429,7 +429,7 @@ export default function ColetaLixoClient() {
             <Search className="absolute left-3 w-4 h-4 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Ex: Centro, Jardim Europa, BNH..."
+              placeholder="Ex: Centro, Setor Aeroporto, Vila Carmo..."
               value={selected || query}
               onChange={e => { setQuery(e.target.value); setSelected(null); setShowDD(true); setShowCal(false); }}
               onFocus={() => setShowDD(true)}
