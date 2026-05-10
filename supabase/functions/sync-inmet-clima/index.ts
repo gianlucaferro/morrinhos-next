@@ -1,5 +1,5 @@
 // Clima Morrinhos via Open-Meteo Forecast API (atualizado de hora em hora)
-// Coordenadas Morrinhos-GO: -17.302, -49.022
+// Coordenadas Morrinhos-GO: -17.7311, -49.1058
 //
 // Estrategia: a cada hora, capturar:
 // 1. current_weather (temp + chuva + umidade + vento agora)
