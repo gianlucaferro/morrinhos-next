@@ -8,7 +8,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const COD_IBGE = "5217203"; // Morrinhos-GO
+const COD_IBGE = "5213806"; // Morrinhos-GO
 
 // QEdu fornece API publica via JSON path; fallback ao endpoint de microdados
 const QEDU_BASE = "https://academia.qedu.org.br/dados/api/v1";

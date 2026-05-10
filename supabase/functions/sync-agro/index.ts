@@ -9,14 +9,17 @@ const SIDRA_BASE = "https://apisidra.ibge.gov.br/values";
 const MUNICIPIO = "5213806"; // Morrinhos
 
 // Municípios vizinhos para comparativo
+// Vizinhos de Morrinhos-GO pra comparativo agropecuário (raio ~70km, Sul de Goiás)
+// TODO_VERIFY: alguns IBGEs herdados do template ainda podem estar errados;
+// rodar sync e checar logs do IBGE SIDRA em caso de "município não encontrado".
 const VIZINHOS: Record<string, string> = {
   "5213806": "Morrinhos",
-  "5208004": "Goiatuba",
-  "5211404": "Joviânia",
-  "5204003": "Bom Jesus de Goiás",
-  "5213707": "Morrinhos",
-  "5206206": "Cromínia",
-  "5214507": "Orizona",
+  "5208608": "Goiatuba",
+  "5217708": "Pontalina",
+  "5213103": "Mineiros",
+  "5212501": "Marzagão",
+  "5200209": "Água Limpa",
+  "5204904": "Caldas Novas",
 };
 
 const REBANHO_IDS: Record<string, string> = {

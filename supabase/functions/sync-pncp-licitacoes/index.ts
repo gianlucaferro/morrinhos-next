@@ -8,7 +8,7 @@ const corsHeaders = {
 };
 
 const PNCP_BASE = "https://pncp.gov.br/api/consulta/v1";
-const COD_IBGE = "5217203"; // Morrinhos-GO
+const COD_IBGE = "5213806"; // Morrinhos-GO
 const UF = "GO";
 
 function fmt(d: Date): string {

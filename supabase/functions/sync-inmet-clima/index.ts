@@ -14,8 +14,8 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const LAT = -17.302;
-const LNG = -49.022;
+const LAT = -17.7311;
+const LNG = -49.1058;
 const ESTACAO = "OPENMETEO_MORRINHOS";
 const TZ = "America/Sao_Paulo";
 
