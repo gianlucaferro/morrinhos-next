@@ -72,6 +72,70 @@ export const fetchFarmaciasMeta = unstable_cache(
   { revalidate: 3600, tags: ["farmacia_fotos"] }
 );
 
+export type FarmaciaCadastrada = {
+  id: string;
+  nome: string;
+  endereco: string | null;
+  telefone: string | null;
+  whatsapp: string | null;
+  instagram_handle: string | null;
+  facebook_handle: string | null;
+  is_24h: boolean | null;
+  fonte_url: string | null;
+  observacao: string | null;
+};
+
+export const fetchFarmaciasCadastradas = unstable_cache(
+  async (): Promise<FarmaciaCadastrada[]> => {
+    const supabase = createPublicSupabaseClient();
+    const { data, error } = await supabase
+      .from("farmacias_cadastradas")
+      .select("id, nome, endereco, telefone, whatsapp, instagram_handle, facebook_handle, is_24h, fonte_url, observacao")
+      .eq("ativo", true)
+      .order("nome");
+    if (error) {
+      console.error("fetchFarmaciasCadastradas error:", error);
+      return [];
+    }
+    return data || [];
+  },
+  ["listings-farmacias-cadastradas"],
+  { revalidate: 1800, tags: ["farmacias_cadastradas"] }
+);
+
+export type PlantaoFarmacia = {
+  id: string;
+  farmacia_nome: string;
+  endereco: string | null;
+  telefone: string | null;
+  data_inicio: string;
+  data_fim: string;
+  horario_inicio: string | null;
+  horario_fim: string | null;
+  is_24h: boolean | null;
+  fonte_url: string | null;
+  observacao: string | null;
+};
+
+export const fetchPlantoesAtuaisEFuturos = unstable_cache(
+  async (): Promise<PlantaoFarmacia[]> => {
+    const supabase = createPublicSupabaseClient();
+    const hoje = new Date().toISOString().slice(0, 10);
+    const { data, error } = await supabase
+      .from("plantao_farmacias")
+      .select("id, farmacia_nome, endereco, telefone, data_inicio, data_fim, horario_inicio, horario_fim, is_24h, fonte_url, observacao")
+      .gte("data_fim", hoje)
+      .order("data_inicio");
+    if (error) {
+      console.error("fetchPlantoesAtuaisEFuturos error:", error);
+      return [];
+    }
+    return data || [];
+  },
+  ["listings-plantao-atual"],
+  { revalidate: 900, tags: ["plantao_farmacias"] }
+);
+
 export const fetchZapEstabelecimentos = unstable_cache(
   async () => {
     const supabase = createPublicSupabaseClient();
