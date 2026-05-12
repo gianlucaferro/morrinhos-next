@@ -139,11 +139,11 @@ export default function RootLayout({
         <SiteLayout>{children}</SiteLayout>
 
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-Q51Q5C93RF"
+          src="https://www.googletagmanager.com/gtag/js?id=G-PFEK08K5EB"
           strategy="afterInteractive"
         />
         <Script id="ga-init" strategy="afterInteractive">
-          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-Q51Q5C93RF',{send_page_view:true});`}
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-PFEK08K5EB',{send_page_view:true});`}
         </Script>
       </body>
     </html>
