@@ -103,17 +103,6 @@ export default async function HomePage() {
             "linear-gradient(to bottom right, hsl(220,60%,15%), hsl(160,40%,18%))",
         }}
       >
-        <Image
-          src="/hero-morrinhos.webp"
-          alt=""
-          aria-hidden
-          fill
-          priority
-          fetchPriority="high"
-          loading="eager"
-          sizes="100vw"
-          className="absolute inset-0 w-full h-full object-cover object-center opacity-60"
-        />
         <ClimaHeroBadge />
         <div className="container relative py-10 md:py-16">
           <div className="flex items-center gap-5 md:gap-8">
