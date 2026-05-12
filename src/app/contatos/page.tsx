@@ -18,17 +18,71 @@ type ContatoItem = {
   url?: string;
 };
 
-// Lista oficial de contatos de Morrinhos pendente.
-// Os números do template original eram de Piracanjuba e foram removidos
-// pra evitar publicar telefones errados pra moradores de Morrinhos.
-//
-// TODO: Coletar telefones oficiais com a Prefeitura/Câmara de Morrinhos
-// e popular as 3 categorias (Segurança, Saúde, Serviços Públicos).
-// Fontes a consultar:
-//   - Prefeitura: https://morrinhos.go.gov.br/
-//   - Câmara: https://morrinhos.go.leg.br/
-//   - Carta de Serviços ao Cidadão: https://acessoainformacao.morrinhos.go.gov.br/
-const contatos: { categoria: string; itens: ContatoItem[] }[] = [];
+// Contatos oficiais Morrinhos-GO — fontes:
+//   - Prefeitura: https://morrinhos.go.gov.br/saude/
+//   - WhatsApp Bolsa Família/CRAS: divulgado pela Sec. Ass. Social
+const contatos: { categoria: string; itens: ContatoItem[] }[] = [
+  {
+    categoria: "Emergências",
+    itens: [
+      { nome: "Polícia Militar", numero: "190", display: "190", tipo: "telefone" },
+      { nome: "SAMU", numero: "192", display: "192", tipo: "telefone" },
+      { nome: "Bombeiros", numero: "193", display: "193", tipo: "telefone" },
+      { nome: "Defesa Civil", numero: "199", display: "199", tipo: "telefone" },
+      { nome: "Disque-Denúncia (anônima)", numero: "181", display: "181", tipo: "telefone" },
+      { nome: "Polícia Civil", numero: "197", display: "197", tipo: "telefone" },
+    ],
+  },
+  {
+    categoria: "Saúde",
+    itens: [
+      { nome: "Hospital Municipal", numero: "6434172002", display: "(64) 3417-2002", tipo: "telefone" },
+      { nome: "Secretaria Municipal de Saúde", numero: "6434172016", display: "(64) 3417-2016", tipo: "telefone" },
+      { nome: "SAMU Morrinhos (24h)", numero: "6434172025", display: "(64) 3417-2025", tipo: "telefone" },
+      { nome: "UBS Centro (Genoveva Alves)", numero: "6434172076", display: "(64) 3417-2076", tipo: "telefone" },
+      { nome: "UBS Jardim Romano", numero: "6434175135", display: "(64) 3417-5135", tipo: "telefone" },
+      { nome: "UBS Jardim América", numero: "6434174890", display: "(64) 3417-4890", tipo: "telefone" },
+      { nome: "UBS Noroeste", numero: "6434172129", display: "(64) 3417-2129", tipo: "telefone" },
+      { nome: "UBS Morro da Saudade", numero: "6434174988", display: "(64) 3417-4988", tipo: "telefone" },
+      { nome: "UBS Cristo Redentor", numero: "6434172064", display: "(64) 3417-2064", tipo: "telefone" },
+      { nome: "UBS Santa Fé", numero: "6434172135", display: "(64) 3417-2135", tipo: "telefone" },
+      { nome: "CAPS (Saúde Mental)", numero: "6434172061", display: "(64) 3417-2061", tipo: "telefone" },
+      { nome: "CAPS AD (Álcool/Drogas)", numero: "6434172026", display: "(64) 3417-2026", tipo: "telefone" },
+      { nome: "CEO (Odontológico)", numero: "6434172120", display: "(64) 3417-2120", tipo: "telefone" },
+      { nome: "CREFIM (Fisioterapia)", numero: "6434172087", display: "(64) 3417-2087", tipo: "telefone" },
+      { nome: "Endemias/Dengue", numero: "6434172067", display: "(64) 3417-2067", tipo: "telefone" },
+      { nome: "Vigilância Sanitária", numero: "6434172113", display: "(64) 3417-2113", tipo: "telefone" },
+      { nome: "Farmácia Básica Municipal", numero: "6434172018", display: "(64) 3417-2018", tipo: "telefone" },
+    ],
+  },
+  {
+    categoria: "Educação",
+    itens: [
+      { nome: "Secretaria Municipal de Educação", numero: "6434172000", display: "(64) 3417-2000", tipo: "telefone" },
+    ],
+  },
+  {
+    categoria: "Assistência Social",
+    itens: [
+      { nome: "CRAS / CadÚnico / Bolsa Família", numero: "5564999849676", display: "(64) 99984-9676", tipo: "whatsapp", mensagem: "Olá, preciso de informações sobre Bolsa Família/CadÚnico" },
+      { nome: "CREAS", numero: "5564996023890", display: "(64) 99602-3890", tipo: "whatsapp", mensagem: "Olá, preciso de atendimento" },
+      { nome: "Sec. Mun. de Assistência Social", numero: "5564992382040", display: "(64) 99238-2040", tipo: "whatsapp", mensagem: "Olá" },
+    ],
+  },
+  {
+    categoria: "Câmara Municipal",
+    itens: [
+      { nome: "Câmara Municipal de Morrinhos", numero: "", display: "morrinhos.go.leg.br", tipo: "link", url: "https://morrinhos.go.leg.br/" },
+    ],
+  },
+  {
+    categoria: "Prefeitura",
+    itens: [
+      { nome: "Site oficial da Prefeitura", numero: "", display: "morrinhos.go.gov.br", tipo: "link", url: "https://morrinhos.go.gov.br/" },
+      { nome: "Portal Acesso à Informação", numero: "", display: "acessoainformacao.morrinhos.go.gov.br", tipo: "link", url: "https://acessoainformacao.morrinhos.go.gov.br/" },
+    ],
+  },
+];
 
 export default function ContatosUteisPage() {
   return (
