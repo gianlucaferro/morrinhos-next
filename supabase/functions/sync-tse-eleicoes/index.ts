@@ -11,8 +11,26 @@ const corsHeaders = {
 const CKAN_BASE = "https://dadosabertos.tse.jus.br/api/3/action";
 const COD_TSE_MORRINHOS = "94994"; // codigo TSE do municipio (5 digitos)
 
+// === Auth guard: validates CRON_SECRET or service_role bearer ===
+function authorize(req: Request): boolean {
+  const cronSecret = Deno.env.get("CRON_SECRET");
+  const headerCron = req.headers.get("x-cron-secret");
+  if (cronSecret && headerCron === cronSecret) return true;
+  const auth = req.headers.get("authorization") ?? "";
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (serviceKey && auth === `Bearer ${serviceKey}`) return true;
+  return false;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+
+  if (!authorize(req)) {
+    return new Response(JSON.stringify({ error: "unauthorized" }), {
+      status: 401,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
   const url = new URL(req.url);
   const dryRun = url.searchParams.get("dry_run") === "1";
   const ano = parseInt(url.searchParams.get("ano") || "2024");

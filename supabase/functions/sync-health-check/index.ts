@@ -5,8 +5,26 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// === Auth guard: validates CRON_SECRET or service_role bearer ===
+function authorize(req: Request): boolean {
+  const cronSecret = Deno.env.get("CRON_SECRET");
+  const headerCron = req.headers.get("x-cron-secret");
+  if (cronSecret && headerCron === cronSecret) return true;
+  const auth = req.headers.get("authorization") ?? "";
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (serviceKey && auth === `Bearer ${serviceKey}`) return true;
+  return false;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+
+  if (!authorize(req)) {
+    return new Response(JSON.stringify({ error: "unauthorized" }), {
+      status: 401,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL")!,

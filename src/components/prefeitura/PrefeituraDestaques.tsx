@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { DollarSign, Users, TrendingUp, Trophy, Share2, BarChart3, PieChart, Building2, Wallet } from "lucide-react";
+import { DollarSign, Users, TrendingUp, Trophy, Share2, BarChart3, PieChart, Building2, Wallet, FileSignature, ExternalLink } from "lucide-react";
 import { createBrowserSupabaseClient } from "@/lib/supabase/client";
 const supabase = createBrowserSupabaseClient();
 import { formatCurrency } from "@/lib/formatters";
@@ -247,6 +247,21 @@ export default function PrefeituraDestaques() {
   const { data: folhaTotal } = useQuery({
     queryKey: ["folha-total"],
     queryFn: fetchFolhaTotal,
+    staleTime: 30 * 60 * 1000,
+  });
+
+  // Contratos PNCP federais (sincronizados via sync-federal-data)
+  const { data: pncpContratos } = useQuery({
+    queryKey: ["pncp-contratos-prefeitura"],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("pncp_licitacoes")
+        .select("numero_controle_pncp, orgao, objeto, valor_estimado, data_publicacao, fonte_url")
+        .ilike("orgao", "%MORRINHOS%")
+        .order("data_publicacao", { ascending: false, nullsFirst: false })
+        .limit(10);
+      return data ?? [];
+    },
     staleTime: 30 * 60 * 1000,
   });
 
@@ -506,6 +521,66 @@ export default function PrefeituraDestaques() {
         </div>
         );
       })()}
+
+      {/* Card: Contratos PNCP (Portal Nacional Compras Públicas) */}
+      {pncpContratos && pncpContratos.length > 0 && (
+        <div className="stat-card">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+              <FileSignature className="w-4 h-4 text-primary" />
+              Contratos federais via PNCP
+            </h3>
+            <a
+              href="https://pncp.gov.br/app/contratos?cnpj=01789551000149"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[10px] text-primary hover:underline inline-flex items-center gap-1"
+            >
+              Ver no PNCP <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+          <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+            Contratos publicados pela Prefeitura no <strong>Portal Nacional de Contratações Públicas</strong>
+            {" "}(Lei 14.133/2021). {pncpContratos.length} contrato(s) nos últimos 12 meses.
+          </p>
+          <div className="space-y-2">
+            {pncpContratos.slice(0, 5).map((c: any) => (
+              <a
+                key={c.numero_controle_pncp}
+                href={c.fonte_url ?? "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-lg border border-border bg-card hover:bg-accent/5 px-3 py-2 transition-colors"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-medium text-foreground line-clamp-2">
+                      {c.objeto || "(sem descrição)"}
+                    </p>
+                    <p className="text-[10px] text-muted-foreground mt-0.5">
+                      {c.numero_controle_pncp}
+                      {c.data_publicacao && ` • publicado em ${new Date(c.data_publicacao + "T12:00:00").toLocaleDateString("pt-BR")}`}
+                    </p>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <p className="text-sm font-semibold text-foreground">
+                      {c.valor_estimado ? formatCurrency(c.valor_estimado) : "—"}
+                    </p>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+          {pncpContratos.length > 5 && (
+            <p className="text-[10px] text-muted-foreground mt-3 text-center">
+              + {pncpContratos.length - 5} contrato(s) — ver no PNCP
+            </p>
+          )}
+          <p className="text-[10px] text-muted-foreground/70 mt-2 text-center">
+            Fonte: api.pncp.gov.br/v1/contratos · CNPJ 01.789.551/0001-49
+          </p>
+        </div>
+      )}
     </div>
   );
 }

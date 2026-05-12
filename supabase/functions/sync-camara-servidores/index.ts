@@ -77,7 +77,25 @@ async function fetchFolha(idorgao: number, mes: number, ano: number): Promise<Sc
 // We'll try common IDs: 1 (Poder Legislativo) and a few others
 const ORGAOS = [1, 2, 3, 4];
 
+// === Auth guard: validates CRON_SECRET or service_role bearer ===
+function authorize(req: Request): boolean {
+  const cronSecret = Deno.env.get("CRON_SECRET");
+  const headerCron = req.headers.get("x-cron-secret");
+  if (cronSecret && headerCron === cronSecret) return true;
+  const auth = req.headers.get("authorization") ?? "";
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (serviceKey && auth === `Bearer ${serviceKey}`) return true;
+  return false;
+}
+
 Deno.serve(async (req) => {
+  if (!authorize(req)) {
+    return new Response(JSON.stringify({ error: "unauthorized" }), {
+      status: 401,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
   // 🚨 KILL-SWITCH: esta função depende de fonte (Centi) que NÃO existe pra Morrinhos.
   // Está bloqueada via env DISABLED=true até ser reescrita pra NucleoGov.
   if (Deno.env.get("DISABLED") === "true") {

@@ -73,6 +73,12 @@ export default async function IndicadoresPage() {
   const pop = get("populacao");
   const pib = get("pib_per_capita");
   const pibTotal = get("pib_total");
+  // Novos: breakdown setorial PIB IBGE + contratos PNCP (sincronizados via sync-federal-data)
+  const pibAgro = get("pib_vab_agro");
+  const pibIndustria = get("pib_vab_industria");
+  const pibServicos = get("pib_vab_servicos");
+  const pncpTotal = get("pncp_contratos_total");
+  const pncpValor = get("pncp_contratos_valor");
   const ideb = get("ideb_anos_iniciais");
   const idebFinais = get("ideb_anos_finais");
   const idhm = get("idhm");
@@ -169,6 +175,60 @@ export default async function IndicadoresPage() {
             fonteUrl="https://www.gov.br/senatran/pt-br/assuntos/estatisticas/frota-de-veiculos-1"
           />
         </div>
+
+        {/* Breakdown setorial do PIB (IBGE SIDRA via sync-federal-data) */}
+        {(pibAgro || pibIndustria || pibServicos) && (
+          <div className="mt-4">
+            <h3 className="text-sm font-semibold text-foreground/80 mb-2">
+              PIB por setor (Valor Adicionado Bruto)
+            </h3>
+            <div className="grid grid-cols-3 gap-3">
+              <StatCard
+                label="Agropecuária"
+                value={dash(pibAgro)}
+                sub={`IBGE ${ano(pibAgro)}`}
+                fonte="IBGE SIDRA 5938"
+                fonteUrl="https://sidra.ibge.gov.br/tabela/5938"
+              />
+              <StatCard
+                label="Indústria"
+                value={dash(pibIndustria)}
+                sub={`IBGE ${ano(pibIndustria)}`}
+                fonte="IBGE SIDRA 5938"
+              />
+              <StatCard
+                label="Serviços"
+                value={dash(pibServicos)}
+                sub={`IBGE ${ano(pibServicos)}`}
+                fonte="IBGE SIDRA 5938"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Contratos PNCP da Prefeitura (últimos 12 meses) */}
+        {(pncpTotal || pncpValor) && (
+          <div className="mt-4">
+            <h3 className="text-sm font-semibold text-foreground/80 mb-2">
+              Contratos publicados via PNCP (Prefeitura, últimos 12 meses)
+            </h3>
+            <div className="grid grid-cols-2 gap-3">
+              <StatCard
+                label="Contratos publicados"
+                value={dash(pncpTotal)}
+                sub="Portal Nacional de Contratações Públicas"
+                fonte="PNCP"
+                fonteUrl="https://pncp.gov.br/app/contratos?cnpj=01789551000149"
+              />
+              <StatCard
+                label="Valor total"
+                value={dash(pncpValor)}
+                sub="Valor global dos contratos"
+                fonte="PNCP"
+              />
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Desenvolvimento humano */}

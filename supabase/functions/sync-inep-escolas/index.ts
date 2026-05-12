@@ -13,8 +13,26 @@ const COD_IBGE = "5213806"; // Morrinhos-GO
 // QEdu fornece API publica via JSON path; fallback ao endpoint de microdados
 const QEDU_BASE = "https://academia.qedu.org.br/dados/api/v1";
 
+// === Auth guard: validates CRON_SECRET or service_role bearer ===
+function authorize(req: Request): boolean {
+  const cronSecret = Deno.env.get("CRON_SECRET");
+  const headerCron = req.headers.get("x-cron-secret");
+  if (cronSecret && headerCron === cronSecret) return true;
+  const auth = req.headers.get("authorization") ?? "";
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (serviceKey && auth === `Bearer ${serviceKey}`) return true;
+  return false;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+
+  if (!authorize(req)) {
+    return new Response(JSON.stringify({ error: "unauthorized" }), {
+      status: 401,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
   const url = new URL(req.url);
   const dryRun = url.searchParams.get("dry_run") === "1";
   const ano = parseInt(url.searchParams.get("ano") || String(new Date().getFullYear() - 1));
