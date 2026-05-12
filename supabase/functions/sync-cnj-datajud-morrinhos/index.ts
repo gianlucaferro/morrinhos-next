@@ -171,12 +171,21 @@ Deno.serve(async (req) => {
       if (hits.length === 0) break;
 
       const rows = hits.map(mapHit).filter((r) => r.numero_processo);
-      if (rows.length > 0) {
+      // Dedup local por numero_processo — search_after por dataAjuizamento com timestamps duplicados
+      // pode retornar o mesmo processo em batches diferentes ou repetido na mesma página
+      const seen = new Set<string>();
+      const deduped = rows.filter((r) => {
+        if (seen.has(r.numero_processo)) return false;
+        seen.add(r.numero_processo);
+        return true;
+      });
+
+      if (deduped.length > 0) {
         const { error } = await sb
           .from("cnj_processos")
-          .upsert(rows, { onConflict: "numero_processo" });
+          .upsert(deduped, { onConflict: "numero_processo" });
         if (error) throw new Error(`Upsert: ${error.message}`);
-        inserted += rows.length;
+        inserted += deduped.length;
       }
 
       // Cursor pra próxima página
