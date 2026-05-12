@@ -16,7 +16,8 @@ import {
   ExternalLink, Phone, Mail, MapPin, Clock, Building2,
   Users, DollarSign, FileText, Gavel, Briefcase, HardHat,
   Search, Info, BarChart3, RefreshCw, Settings, CheckCircle2,
-  AlertCircle, AlertTriangle, Loader2, Sparkles, Truck
+  AlertCircle, AlertTriangle, Loader2, Sparkles, Truck, FileCheck2,
+  Calendar
 } from "lucide-react";
 import { createBrowserSupabaseClient } from "@/lib/supabase/client";
 const supabase = createBrowserSupabaseClient();
@@ -3168,6 +3169,212 @@ function TCMTab() {
   );
 }
 
+// ============================================================
+// RELATÓRIOS FISCAIS (RGF + RREO) — dados do NucleoGov
+// ============================================================
+
+interface RelatorioFiscal {
+  id: string;
+  tipo: "RGF" | "RREO" | "BALANCO" | "PPA" | "LDO" | "LOA" | "PLANEJAMENTO";
+  ano: number;
+  mes: number | null;
+  descricao: string;
+  orgao: string | null;
+  data_publicacao: string | null;
+  anexo_nome: string | null;
+  fonte_url: string | null;
+}
+
+const MESES_PT = [
+  "", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+  "Jul", "Ago", "Set", "Out", "Nov", "Dez",
+];
+
+function RelatoriosFiscaisTab() {
+  const [tipoFiltro, setTipoFiltro] = useState<"todos" | "RGF" | "RREO">("todos");
+  const [anoFiltro, setAnoFiltro] = useState<string>("todos");
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["relatorios_fiscais"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("relatorios_fiscais")
+        .select("id, tipo, ano, mes, descricao, orgao, data_publicacao, anexo_nome, fonte_url")
+        .order("ano", { ascending: false })
+        .order("mes", { ascending: false, nullsFirst: false })
+        .limit(500);
+      if (error) throw error;
+      return (data ?? []) as RelatorioFiscal[];
+    },
+  });
+
+  const anosDisponiveis = useMemo(() => {
+    if (!data) return [];
+    return Array.from(new Set(data.map((r) => r.ano))).sort((a, b) => b - a);
+  }, [data]);
+
+  const filtered = useMemo(() => {
+    if (!data) return [];
+    return data.filter((r) => {
+      if (tipoFiltro !== "todos" && r.tipo !== tipoFiltro) return false;
+      if (anoFiltro !== "todos" && `${r.ano}` !== anoFiltro) return false;
+      return true;
+    });
+  }, [data, tipoFiltro, anoFiltro]);
+
+  const stats = useMemo(() => {
+    if (!data) return { total: 0, rgf: 0, rreo: 0 };
+    return {
+      total: data.length,
+      rgf: data.filter((r) => r.tipo === "RGF").length,
+      rreo: data.filter((r) => r.tipo === "RREO").length,
+    };
+  }, [data]);
+
+  if (isLoading) return <div className="stat-card animate-pulse h-40" />;
+
+  return (
+    <div className="space-y-4">
+      {/* Header explicativo */}
+      <div className="stat-card border-blue-500/20 bg-blue-500/5">
+        <div className="flex items-start gap-3">
+          <Info className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+          <div>
+            <h3 className="text-base font-semibold text-foreground mb-1">
+              Relatórios fiscais obrigatórios (LRF)
+            </h3>
+            <p className="text-sm text-foreground/85 leading-relaxed">
+              Conforme a <strong>Lei de Responsabilidade Fiscal (LC 101/2000)</strong>, o município
+              publica trimestralmente o <strong>RGF (Relatório de Gestão Fiscal)</strong> e
+              bimestralmente o <strong>RREO (Relatório Resumido de Execução Orçamentária)</strong>.
+              Dados sincronizados do <a href="https://acessoainformacao.morrinhos.go.gov.br/cidadao/resp_fiscal/sgrgf"
+              target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                Portal de Transparência da Prefeitura
+              </a>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-3 gap-3">
+        <div className="stat-card text-center py-3">
+          <p className="text-2xl font-bold text-primary">{stats.total}</p>
+          <p className="text-xs text-muted-foreground">Anexos publicados</p>
+        </div>
+        <div className="stat-card text-center py-3">
+          <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-500">{stats.rgf}</p>
+          <p className="text-xs text-muted-foreground">Anexos RGF</p>
+        </div>
+        <div className="stat-card text-center py-3">
+          <p className="text-2xl font-bold text-blue-600 dark:text-blue-500">{stats.rreo}</p>
+          <p className="text-xs text-muted-foreground">Anexos RREO</p>
+        </div>
+      </div>
+
+      {/* Filtros */}
+      <div className="flex flex-wrap gap-3 items-center">
+        <Select value={tipoFiltro} onValueChange={(v) => setTipoFiltro(v as "todos" | "RGF" | "RREO")}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Tipo" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="todos">Todos os tipos</SelectItem>
+            <SelectItem value="RGF">RGF (trimestral)</SelectItem>
+            <SelectItem value="RREO">RREO (bimestral)</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Select value={anoFiltro} onValueChange={setAnoFiltro}>
+          <SelectTrigger className="w-[140px]">
+            <SelectValue placeholder="Ano" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="todos">Todos os anos</SelectItem>
+            {anosDisponiveis.map((a) => (
+              <SelectItem key={a} value={`${a}`}>{a}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Badge variant="secondary" className="ml-auto">
+          {filtered.length} {filtered.length === 1 ? "anexo" : "anexos"}
+        </Badge>
+      </div>
+
+      {/* Lista */}
+      {filtered.length === 0 ? (
+        <div className="stat-card text-center py-10">
+          <FileCheck2 className="w-12 h-12 text-muted-foreground/40 mx-auto mb-3" />
+          <p className="text-sm text-muted-foreground">Nenhum anexo encontrado pros filtros selecionados</p>
+        </div>
+      ) : (
+        <div className="space-y-2">
+          {filtered.map((r) => (
+            <div key={r.id} className="stat-card hover:bg-accent/5 transition-colors">
+              <div className="flex items-start gap-3">
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                  r.tipo === "RGF" ? "bg-emerald-500/10" : "bg-blue-500/10"
+                }`}>
+                  <FileCheck2 className={`w-5 h-5 ${
+                    r.tipo === "RGF" ? "text-emerald-500" : "text-blue-500"
+                  }`} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap mb-1">
+                    <Badge variant="outline" className="text-[10px] uppercase tracking-wide">
+                      {r.tipo}
+                    </Badge>
+                    <Badge variant="secondary" className="text-[10px]">
+                      {r.mes ? `${MESES_PT[r.mes]}/${r.ano}` : `${r.ano}`}
+                    </Badge>
+                    {r.data_publicacao && (
+                      <span className="text-[10px] text-muted-foreground flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
+                        publicado em {new Date(r.data_publicacao).toLocaleDateString("pt-BR")}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-sm font-medium text-foreground capitalize leading-snug">
+                    {r.descricao.replace(/_/g, " ")}
+                  </p>
+                  {r.anexo_nome && (
+                    <p className="text-xs text-muted-foreground mt-1 font-mono">
+                      {r.anexo_nome}
+                    </p>
+                  )}
+                </div>
+                {r.fonte_url && (
+                  <a
+                    href={r.fonte_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="shrink-0 text-primary hover:scale-110 transition-transform"
+                    title="Ver no portal oficial"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <p className="text-[10px] text-muted-foreground/70 text-center pt-2">
+        Fonte: <a
+          href="https://acessoainformacao.morrinhos.go.gov.br/cidadao/resp_fiscal/sgrgf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-primary hover:underline"
+        >
+          Portal de Transparência de Morrinhos (NucleoGov) — Responsabilidade Fiscal
+        </a>
+      </p>
+    </div>
+  );
+}
+
 // ===== MAIN PAGE =====
 
 const tabs = [
@@ -3185,6 +3392,7 @@ const tabs = [
   { value: "diarias", label: "Diárias", icon: Briefcase },
   { value: "licitacoes", label: "Licitações", icon: Gavel },
   { value: "obras", label: "Obras", icon: HardHat },
+  { value: "relatorios-fiscais", label: "Relatórios Fiscais", icon: FileCheck2 },
   { value: "veiculos", label: "Veículos", icon: Truck },
   { value: "admin", label: "Admin", icon: Settings },
 ];
@@ -3260,6 +3468,7 @@ export default function Prefeitura() {
           <TabsContent value="contratos" forceMount className={activeTab !== "contratos" ? "hidden" : ""}><ContratosTab /></TabsContent>
           <TabsContent value="licitacoes"><LicitacoesTab /></TabsContent>
           <TabsContent value="obras"><ObrasTab /></TabsContent>
+          <TabsContent value="relatorios-fiscais"><RelatoriosFiscaisTab /></TabsContent>
           <TabsContent value="veiculos"><VeiculosTab /></TabsContent>
           <TabsContent value="admin"><AdminPanel /></TabsContent>
         </Tabs>
