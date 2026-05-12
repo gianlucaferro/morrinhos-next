@@ -528,8 +528,35 @@ async function runSync(target: string, supabase: ReturnType<typeof createClient>
 }
 
 // ===== Handler =====
+// Validação de CRON_SECRET — bloqueia invocações públicas não autorizadas.
+// Aceita requisições com:
+//   - header `x-cron-secret` = CRON_SECRET (cron interno)
+//   - header `Authorization: Bearer <service_role_key>` (admin manual)
+//   - Authorization Bearer com anon key NÃO é suficiente.
+function authorize(req: Request): { ok: boolean; reason?: string } {
+  const cronSecret = Deno.env.get("CRON_SECRET");
+  const headerCron = req.headers.get("x-cron-secret");
+  if (cronSecret && headerCron && headerCron === cronSecret) {
+    return { ok: true };
+  }
+  const auth = req.headers.get("authorization") ?? "";
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (serviceKey && auth === `Bearer ${serviceKey}`) {
+    return { ok: true };
+  }
+  return { ok: false, reason: "missing or invalid x-cron-secret / service_role" };
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+
+  const authz = authorize(req);
+  if (!authz.ok) {
+    return new Response(JSON.stringify({ error: "unauthorized", reason: authz.reason }), {
+      status: 401,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
 
   const url = new URL(req.url);
   const target = url.searchParams.get("target");

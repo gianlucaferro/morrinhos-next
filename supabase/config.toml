@@ -211,6 +211,17 @@ verify_jwt = false
 [functions.sync-transferencias-federais]
 verify_jwt = false
 
+# === FUNÇÕES DE CRON COM CRON_SECRET (verify_jwt=false + guard explícito) ===
+# Estas funções validam header x-cron-secret no início. Veja docs/CODEX_RESPOSTA_RELATORIO_TECNICO_2026-05-12.md.
+[functions.nucleogov-sync]
+verify_jwt = false
+
+[functions.sync-federal-data]
+verify_jwt = false
+
+[functions.health-check-cron]
+verify_jwt = false
+
 # Functions chamadas pelo frontend (JWT verify ON, default)
 # Mantidas como default para evitar abuso de IA paga ou admin sem auth:
 # admin-classificados, admin-login, admin-zap-read, admin-zap-update,

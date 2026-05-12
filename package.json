@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "eslint"
   },
+  "engines": {
+    "node": ">=20.18.0 <23"
+  },
   "browserslist": [
     "Chrome >= 90",
     "Firefox >= 90",

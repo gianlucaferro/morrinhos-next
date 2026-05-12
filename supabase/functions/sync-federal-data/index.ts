@@ -152,9 +152,28 @@ async function syncPncpContratos(sb: ReturnType<typeof createClient>) {
   return { pncp_inserted: inserted, pncp_paginas: pagina - 1, pncp_total_paginas: totalPaginas };
 }
 
+// ============= Auth =============
+function authorize(req: Request): { ok: boolean; reason?: string } {
+  const cronSecret = Deno.env.get("CRON_SECRET");
+  const headerCron = req.headers.get("x-cron-secret");
+  if (cronSecret && headerCron && headerCron === cronSecret) return { ok: true };
+  const auth = req.headers.get("authorization") ?? "";
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (serviceKey && auth === `Bearer ${serviceKey}`) return { ok: true };
+  return { ok: false, reason: "missing or invalid x-cron-secret / service_role" };
+}
+
 // ============= Handler =============
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+
+  const authz = authorize(req);
+  if (!authz.ok) {
+    return new Response(JSON.stringify({ error: "unauthorized", reason: authz.reason }), {
+      status: 401,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
 
   const url = new URL(req.url);
   const target = url.searchParams.get("target") ?? "all";
