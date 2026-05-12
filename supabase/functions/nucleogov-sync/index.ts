@@ -41,6 +41,9 @@ interface SyncConfig {
   maxPages?: number;
   fonteRef: string; // path do portal usado como Referer + base do fonte_url
   mapper: (r: NucleoRow, base: string) => Record<string, unknown> | null;
+  // Para endpoints que ignoram paginação (atividades_legislativas):
+  // usar acao=exportar que devolve TUDO num único request
+  useExport?: boolean;
 }
 
 function baseUrl(base: NucleoBase = "prefeitura"): string {
@@ -243,6 +246,95 @@ const CONFIGS: Record<string, SyncConfig> = {
       };
     },
   },
+
+  // 9) Atividades Legislativas (projetos de lei, requerimentos, indicações, moções) ~812 registros
+  // ⚠️ A API "listar" da câmara IGNORA paginação — sempre devolve só 15 itens.
+  // Solução: usar acao="exportar" que devolve TODOS num único response.
+  camara_projetos: {
+    base: "camara",
+    modulo: "atividades_legislativas",
+    acao: "exportar",
+    useExport: true,
+    tabela: "projetos",
+    fonteRef: "cidadao/legislacao/atividades_legislativas",
+    mapper: (r, base) => {
+      // Campo único: "ato_legislativo" = "Projeto de Lei do Executivo 3.669/2026"
+      // Parsear pra extrair tipo + numero + ano
+      const atoStr = (r.ato_legislativo as string) ?? "";
+      const m = atoStr.match(/^(.+?)\s+([\d\.\/]+?)\/(\d{4})$/);
+      let tipo = "Ato Legislativo";
+      let numero = (r.numero as string) ?? "s/n";
+      let ano: number | null = null;
+      if (m) {
+        tipo = m[1].trim();
+        numero = m[2];
+        ano = parseInt(m[3]);
+      }
+
+      // Converter DD/MM/YYYY → YYYY-MM-DD
+      const pub = (r.publicacao as string) ?? null;
+      let dataIso: string | null = null;
+      if (pub && /^\d{2}\/\d{2}\/\d{4}$/.test(pub)) {
+        const [d, mo, y] = pub.split("/");
+        dataIso = `${y}-${mo}-${d}`;
+        if (!ano) ano = parseInt(y);
+      }
+
+      // Limpar HTML da ementa
+      const ementaRaw = (r.ementa as string) ?? "";
+      const ementa = ementaRaw
+        .replace(/<[^>]+>/g, " ")
+        .replace(/&nbsp;/g, " ")
+        .replace(/&amp;/g, "&")
+        .replace(/\s+/g, " ")
+        .trim() || "(sem ementa)";
+
+      // Chave única: usar a string completa do ato_legislativo (única por natureza)
+      const uniqueKey = atoStr || `${tipo}-${numero}-${ano}`;
+
+      return {
+        nucleogov_id: `camara_projetos:${uniqueKey}`,
+        tipo,
+        numero,
+        ano,
+        data: dataIso,
+        ementa,
+        origem: tipo, // ex: "Projeto de Lei do Executivo"
+        autor_texto: (r.autoria as string) ?? "(sem autoria)",
+        status: (r.situacao as string) ?? null,
+        fonte_visualizar_url: `${base}/cidadao/legislacao/atividades_legislativas`,
+      };
+    },
+  },
+
+  // 10) Apreciação de Contas dos Vereadores (TCM-GO) ~5 registros
+  camara_apreciacao: {
+    base: "camara",
+    modulo: "apreciacao_contas",
+    acao: "listar",
+    tabela: "camara_apreciacao_contas",
+    pageSize: 100,
+    maxPages: 5,
+    fonteRef: "cidadao/legislacao/apreciacao_contas",
+    mapper: (r, base) => {
+      const id = (r.id as string) ?? null;
+      if (!id) return null;
+      const ano = r.ano ? parseInt(`${r.ano}`) : null;
+      if (!ano) return null;
+      return {
+        nucleogov_id: `camara_apreciacao:${id}`,
+        ano,
+        anos_referencia: (r.anos as string) ?? null,
+        numero: (r.numero as string) ?? null,
+        tipo: (r.tipo as string) ?? null,
+        status: (r.status as string) ?? null,
+        ementa: (r.ementa as string) ?? null,
+        data_publicacao: (r.data_publicacao as string) ?? null,
+        link: (r.link as string) ?? null,
+        fonte_url: `${base}/cidadao/legislacao/apreciacao_contas`,
+      };
+    },
+  },
 };
 
 function mapRelatorioFiscal(
@@ -316,15 +408,67 @@ async function runSync(target: string, supabase: ReturnType<typeof createClient>
   const cfg = CONFIGS[target];
   if (!cfg) throw new Error(`Target desconhecido: ${target}`);
 
-  const pageSize = cfg.pageSize ?? 100;
-  const maxPages = cfg.maxPages ?? 50;
-  let offset = 0;
-  let totalDeclared = Infinity;
+  const base: NucleoBase = cfg.base ?? "prefeitura";
+  const bUrl = baseUrl(base);
+  const startedAt = Date.now();
   let inserted = 0;
   let skipped = 0;
   let pagesProcessed = 0;
+  let totalDeclared = Infinity;
 
-  const startedAt = Date.now();
+  // ===== Modo EXPORT: chama acao=exportar com formato=json (1 request retorna tudo) =====
+  if (cfg.useExport) {
+    const dados = { filtros: { ...(cfg.filtros ?? {}), exportar: true }, formato: "json" };
+    const { dados: rows } = await fetchNucleo(base, cfg.modulo, cfg.acao, dados, cfg.fonteRef);
+    pagesProcessed = 1;
+    totalDeclared = rows.length;
+
+    if (rows.length > 0) {
+      const mapped = rows
+        .map((r) => cfg.mapper(r, bUrl))
+        .filter((x): x is Record<string, unknown> => x !== null);
+      skipped = rows.length - mapped.length;
+
+      // Dedupe localmente por nucleogov_id (NucleoGov retorna duplicates no exportar)
+      const seen = new Set<string>();
+      const deduped: Record<string, unknown>[] = [];
+      for (const m of mapped) {
+        const id = m.nucleogov_id as string;
+        if (seen.has(id)) continue;
+        seen.add(id);
+        deduped.push(m);
+      }
+      skipped += mapped.length - deduped.length;
+
+      // Upsert em batches de 200 pra não estourar payload
+      const batchSize = 200;
+      for (let i = 0; i < deduped.length; i += batchSize) {
+        const batch = deduped.slice(i, i + batchSize);
+        const { error } = await supabase
+          .from(cfg.tabela)
+          .upsert(batch, { onConflict: "nucleogov_id" });
+        if (error) {
+          throw new Error(`Upsert ${cfg.tabela} (batch ${i}): ${error.message}`);
+        }
+        inserted += batch.length;
+      }
+    }
+
+    return {
+      target,
+      inserted,
+      skipped,
+      pagesProcessed,
+      totalDeclared,
+      elapsedMs: Date.now() - startedAt,
+      mode: "export",
+    };
+  }
+
+  // ===== Modo PAGINADO normal =====
+  const pageSize = cfg.pageSize ?? 100;
+  const maxPages = cfg.maxPages ?? 50;
+  let offset = 0;
 
   for (let p = 0; p < maxPages; p++) {
     const dados: Record<string, unknown> = {
@@ -333,7 +477,6 @@ async function runSync(target: string, supabase: ReturnType<typeof createClient>
       ...(cfg.filtros ?? {}),
     };
 
-    const base: NucleoBase = cfg.base ?? "prefeitura";
     const { dados: rows, total } = await fetchNucleo(
       base,
       cfg.modulo,
@@ -346,7 +489,6 @@ async function runSync(target: string, supabase: ReturnType<typeof createClient>
     if (total) totalDeclared = parseInt(total);
     if (rows.length === 0) break;
 
-    const bUrl = baseUrl(base);
     const mapped = rows
       .map((r) => cfg.mapper(r, bUrl))
       .filter((x): x is Record<string, unknown> => x !== null);
@@ -371,7 +513,6 @@ async function runSync(target: string, supabase: ReturnType<typeof createClient>
     if (rows.length < pageSize) break;
     if (offset >= totalDeclared) break;
 
-    // Pequeno delay pra não martelar o NucleoGov
     await new Promise((res) => setTimeout(res, 200));
   }
 
@@ -382,6 +523,7 @@ async function runSync(target: string, supabase: ReturnType<typeof createClient>
     pagesProcessed,
     totalDeclared: totalDeclared === Infinity ? null : totalDeclared,
     elapsedMs: Date.now() - startedAt,
+    mode: "paginated",
   };
 }
 

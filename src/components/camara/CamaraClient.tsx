@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Users, Megaphone, Landmark, UserCheck, Search, Sparkles, Download, ChevronLeft, ChevronRight, Loader2, FileText, CalendarCheck, Gavel, FileSignature, Receipt, TrendingUp, Plane, ScrollText, Video, BookOpen, ClipboardList, FileStack, HandMetal } from "lucide-react";
+import { Users, Megaphone, Landmark, UserCheck, Search, Sparkles, Download, ChevronLeft, ChevronRight, Loader2, FileText, CalendarCheck, Gavel, FileSignature, Receipt, TrendingUp, Plane, ScrollText, Video, BookOpen, ClipboardList, FileStack, HandMetal, FileCheck2, ExternalLink, Calendar } from "lucide-react";
 import Layout from "@/components/Layout";
 import SEO from "@/components/SEO";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -27,16 +27,18 @@ import TransmissaoCard from "@/components/camara/TransmissaoCard";
 
 const tabs = [
   { value: "vereadores", label: "Vereadores", icon: Users },
-  { value: "servidores", label: "Servidores", icon: UserCheck },
-  { value: "contratos", label: "Contratos", icon: FileSignature },
   { value: "projetos", label: "Projetos", icon: FileText },
+  { value: "decretos-leg", label: "Decretos Leg.", icon: FileStack },
+  { value: "portarias-cm", label: "Portarias", icon: ScrollText },
+  { value: "resolucoes", label: "Resoluções", icon: FileSignature },
+  { value: "apreciacao-contas", label: "Apreciação de Contas", icon: FileCheck2 },
+  { value: "servidores", label: "Servidores", icon: UserCheck },
   { value: "atuacao", label: "Atuação", icon: Megaphone },
   { value: "indicacoes", label: "Indicações", icon: HandMetal },
-  { value: "resolucoes", label: "Resoluções", icon: ScrollText },
-  { value: "decretos-leg", label: "Decretos Leg.", icon: FileStack },
   { value: "pautas", label: "Pautas", icon: ClipboardList },
   { value: "atas", label: "Atas", icon: BookOpen },
   { value: "transmissao", label: "Transmissão", icon: Video },
+  { value: "contratos", label: "Contratos", icon: FileSignature },
   { value: "licitacoes", label: "Licitações", icon: Gavel },
   { value: "despesas", label: "Despesas", icon: Receipt },
   { value: "receitas", label: "Receitas", icon: TrendingUp },
@@ -225,6 +227,92 @@ function ServidoresCamaraTab() {
   );
 }
 
+function ApreciacaoContasTab() {
+  const { data: items, isLoading } = useQuery({
+    queryKey: ["camara-apreciacao-contas"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("camara_apreciacao_contas")
+        .select("id, ano, anos_referencia, numero, tipo, status, ementa, data_publicacao, link, fonte_url")
+        .order("ano", { ascending: false });
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  return (
+    <div className="container py-4 space-y-4">
+      <div className="stat-card border-blue-500/20 bg-blue-500/5">
+        <div className="flex items-start gap-3">
+          <FileCheck2 className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+          <div>
+            <h3 className="text-base font-semibold text-foreground mb-1">
+              Apreciação das contas pelo TCM-GO
+            </h3>
+            <p className="text-sm text-foreground/85 leading-relaxed">
+              Acompanhe o status do julgamento das contas anuais da Câmara Municipal pelo
+              <strong> Tribunal de Contas dos Municípios de Goiás</strong>. Dados oficiais
+              sincronizados do{" "}
+              <a href="https://acessoainformacao.morrinhos.go.leg.br/cidadao/legislacao/apreciacao_contas"
+                target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                Portal de Transparência da Câmara
+              </a>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {isLoading && <div className="stat-card animate-pulse h-40" />}
+
+      {!isLoading && (items?.length || 0) === 0 && (
+        <div className="stat-card text-center py-8">
+          <FileCheck2 className="w-10 h-10 text-muted-foreground/40 mx-auto mb-3" />
+          <p className="text-sm text-muted-foreground">Sem dados ainda — sync diário em andamento.</p>
+        </div>
+      )}
+
+      <div className="space-y-2">
+        {(items || []).map((c: any) => (
+          <div key={c.id} className="stat-card">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0">
+                <Calendar className="w-5 h-5 text-blue-500" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap mb-1">
+                  <Badge variant="outline" className="text-[10px]">
+                    Exercício {c.anos_referencia || c.ano}
+                  </Badge>
+                  {c.status && (
+                    <Badge variant={c.status === "Aprovado" ? "default" : "secondary"} className="text-[10px]">
+                      {c.status}
+                    </Badge>
+                  )}
+                  {c.tipo && (
+                    <Badge variant="outline" className="text-[10px]">{c.tipo}</Badge>
+                  )}
+                </div>
+                <p className="text-sm text-foreground leading-snug">{c.ementa || "(sem ementa)"}</p>
+                {c.data_publicacao && (
+                  <p className="text-[11px] text-muted-foreground mt-1">
+                    Publicado em {new Date(c.data_publicacao + "T12:00:00").toLocaleDateString("pt-BR")}
+                  </p>
+                )}
+              </div>
+              {c.fonte_url && (
+                <a href={c.fonte_url} target="_blank" rel="noopener noreferrer"
+                  className="shrink-0 text-primary hover:scale-110 transition-transform">
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function TransmissaoTab() {
   return (
     <div className="container py-4 space-y-4">
@@ -287,35 +375,68 @@ export default function CamaraMunicipal() {
         <TabsContent value="vereadores">
           <VereadoresContent />
         </TabsContent>
-        <TabsContent value="servidores">
-          <ServidoresCamaraTab />
-        </TabsContent>
-        <TabsContent value="contratos">
-          <ContratosTab />
-        </TabsContent>
         <TabsContent value="projetos">
           <ProjetosContent />
+        </TabsContent>
+        <TabsContent value="decretos-leg">
+          <AtosTab
+            tipoNome="Decreto"
+            descricao="Decretos legislativos aprovados pela Câmara Municipal de Morrinhos. Atos privativos do Legislativo (concessão de títulos honoríficos, autorizações de viagem, etc.)."
+            fonteUrl="https://acessoainformacao.morrinhos.go.leg.br/cidadao/legislacao/decretos"
+          />
+        </TabsContent>
+        <TabsContent value="portarias-cm">
+          <AtosTab
+            tipoNome="Portaria"
+            descricao="Portarias administrativas da Câmara Municipal de Morrinhos (atos internos da Mesa Diretora — concessão de diárias, licenças, designações)."
+            fonteUrl="https://acessoainformacao.morrinhos.go.leg.br/cidadao/legislacao/portarias"
+          />
+        </TabsContent>
+        <TabsContent value="resolucoes">
+          <AtosTab
+            tipoNome="Resolução"
+            descricao="Resoluções da Câmara Municipal de Morrinhos (normas internas do Legislativo)."
+            fonteUrl="https://acessoainformacao.morrinhos.go.leg.br/cidadao/legislacao/resolucoes"
+          />
+        </TabsContent>
+        <TabsContent value="apreciacao-contas">
+          <ApreciacaoContasTab />
+        </TabsContent>
+        <TabsContent value="servidores">
+          <ServidoresCamaraTab />
         </TabsContent>
         <TabsContent value="atuacao">
           <AtuacaoContent />
         </TabsContent>
         <TabsContent value="indicacoes">
-          <AtosTab tipoCodigo={24} tipoNome="Indicações" descricao="Indicações dos vereadores da Câmara Municipal de Morrinhos." />
-        </TabsContent>
-        <TabsContent value="resolucoes">
-          <ResolucoesTab />
-        </TabsContent>
-        <TabsContent value="decretos-leg">
-          <AtosTab tipoCodigo={12} tipoNome="Decretos Legislativos" descricao="Decretos legislativos aprovados pela Câmara Municipal de Morrinhos." />
+          <AtosTab
+            tipoNome="Indicação"
+            descricao="Indicações dos vereadores ao Poder Executivo (solicitações formais de obras, serviços, melhorias)."
+            emptyHint="A Câmara de Morrinhos não publica Indicações de forma estruturada via o portal NucleoGov. Indicações aparecem dentro dos Projetos (aba 'Projetos') quando o vereador protocola formalmente."
+            fonteUrl="https://acessoainformacao.morrinhos.go.leg.br/cidadao/legislacao/atividades_legislativas"
+          />
         </TabsContent>
         <TabsContent value="pautas">
-          <AtosTab tipoCodigo={14} tipoNome="Pautas das Sessões" descricao="Pautas das sessões ordinárias da Câmara Municipal de Morrinhos." />
+          <AtosTab
+            tipoNome="Pauta"
+            descricao="Pautas das sessões ordinárias da Câmara Municipal de Morrinhos."
+            emptyHint="As pautas das sessões da Câmara não estão disponíveis em formato estruturado no portal NucleoGov. Consulte o portal oficial pra ver os documentos."
+            fonteUrl="https://acessoainformacao.morrinhos.go.leg.br/cidadao/atos_adm/mp/id=6"
+          />
         </TabsContent>
         <TabsContent value="atas">
-          <AtosTab tipoCodigo={8} tipoNome="Atas das Sessões" descricao="Atas das sessões ordinárias da Câmara Municipal de Morrinhos." />
+          <AtosTab
+            tipoNome="Ata"
+            descricao="Atas das sessões ordinárias da Câmara Municipal de Morrinhos."
+            emptyHint="As atas das sessões da Câmara não estão disponíveis em formato estruturado no portal NucleoGov. Consulte o portal oficial pra ver os PDFs."
+            fonteUrl="https://acessoainformacao.morrinhos.go.leg.br/cidadao/atos_adm/mp/id=9"
+          />
         </TabsContent>
         <TabsContent value="transmissao">
           <TransmissaoTab />
+        </TabsContent>
+        <TabsContent value="contratos">
+          <ContratosTab />
         </TabsContent>
         <TabsContent value="licitacoes">
           <LicitacoesTab />
