@@ -281,10 +281,8 @@ export default function PrefeituraDestaques() {
         </div>
       )}
 
-      {/* Card 2: Top 10 salários — TEMPORARIAMENTE OCULTO (a pedido do user)
-          Para reativar: trocar SHOW_TOP_SALARIOS para true. A query continua
-          rodando normalmente, só a renderização está bloqueada. */}
-      {(false as boolean) /* SHOW_TOP_SALARIOS */ && topSalarios && topSalarios.items.length > 0 && (() => {
+      {/* Card 2: Top 10 maiores salários do mês (Morrinhos.ai) */}
+      {topSalarios && topSalarios.items.length > 0 && (() => {
         const mesRef = formatCompetencia(topSalarios.competencia);
         const temAtipico = topSalarios.items.some((s) => s.atipico);
         return (
