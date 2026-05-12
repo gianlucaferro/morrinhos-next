@@ -80,7 +80,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "yeRY3PHi6DLUuUW1HbbhJ7WHnnJaLcVekdFS6yDrKFo",
+    google: "8NEoxQgSBlfSM-jGfN96PRzLBev-CnMbIpRQ0K6Kjo0",
   },
   other: {
     "geo.region": "BR-GO",
