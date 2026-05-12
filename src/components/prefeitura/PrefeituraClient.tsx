@@ -108,7 +108,7 @@ function ChefiaExecutivo() {
             <div className="min-w-0 flex-1">
               <h2 className="text-lg font-bold text-foreground">{a.nome}</h2>
               <Badge variant="secondary" className="mt-1">
-                {a.tipo === "prefeita" ? "Prefeita Municipal" : "Vice-Prefeito"}
+                {a.tipo === "Prefeito" ? "Prefeito Municipal" : "Vice-Prefeito"}
               </Badge>
               {a.partido && <p className="text-xs text-muted-foreground mt-1">{a.partido}</p>}
               <p className="text-xs text-muted-foreground mt-1">
@@ -118,7 +118,7 @@ function ChefiaExecutivo() {
                 <div className="flex items-center gap-2 rounded-lg bg-accent/10 px-3 py-1.5">
                   <DollarSign className="w-4 h-4 text-accent" />
                   <span className="text-base font-bold text-foreground">
-                    {a.tipo === "prefeita" ? "R$ 19.875,00" : "R$ 9.875,00"}
+                    {a.tipo === "Prefeito" ? "R$ 19.875,00" : "R$ 9.875,00"}
                   </span>
                   <span className="text-xs text-muted-foreground">/mês</span>
                 </div>
@@ -3172,7 +3172,7 @@ function TCMTab() {
 
 const tabs = [
   { value: "visao-geral", label: "Visão Geral", icon: LayoutDashboard },
-  { value: "chefia", label: "Prefeita e Vice", icon: Building2 },
+  { value: "chefia", label: "Prefeito e Vice", icon: Building2 },
   { value: "secretarias", label: "Secretarias", icon: Building2 },
   { value: "contratos", label: "Contratos", icon: FileText },
   { value: "servidores", label: "Servidores", icon: Users },
