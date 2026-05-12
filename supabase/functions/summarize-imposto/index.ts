@@ -70,7 +70,7 @@ Não use bullet points, escreva em texto corrido. Seja direto e objetivo.`;
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "gemini-2.5-flash-lite",
+        model: "gemini-flash-lite-latest",
         messages: [
           { role: "system", content: "Você é um assistente de transparência pública municipal. Responda sempre em português brasileiro, de forma simples e acessível." },
           { role: "user", content: prompt },

@@ -149,7 +149,7 @@ Responda em português, de forma objetiva, em no máximo 4 frases. Não invente 
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "gemini-2.5-flash-lite",
+        model: "gemini-flash-lite-latest",
         messages: [
           { role: "system", content: "Você é um especialista em transparência pública municipal." },
           { role: "user", content: prompt },

@@ -46,7 +46,7 @@ Escreva um resumo de 2-3 frases em linguagem simples, explicando o impacto prát
         Authorization: `Bearer ${lovableKey}`,
       },
       body: JSON.stringify({
-        model: "gemini-2.5-flash-lite",
+        model: "gemini-flash-lite-latest",
         messages: [{ role: "user", content: prompt }],
         max_tokens: 300,
       }),

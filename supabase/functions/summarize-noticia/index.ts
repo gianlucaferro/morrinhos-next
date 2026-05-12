@@ -52,7 +52,7 @@ Sem jargão burocrático. Máximo 100 palavras.`;
       method: "POST",
       headers: { "Content-Type": "application/json", "Authorization": `Bearer ${geminiKey}` },
       body: JSON.stringify({
-        model: "gemini-2.5-flash-lite",
+        model: "gemini-flash-lite-latest",
         messages: [{ role: "user", content: prompt }],
         max_tokens: 400, temperature: 0.3,
       }),

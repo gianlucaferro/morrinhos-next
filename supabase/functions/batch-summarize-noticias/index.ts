@@ -17,7 +17,7 @@ async function callGemini(prompt: string, key: string, retries = 3): Promise<str
       method: "POST",
       headers: { "Content-Type": "application/json", "Authorization": `Bearer ${key}` },
       body: JSON.stringify({
-        model: "gemini-2.5-flash-lite",
+        model: "gemini-flash-lite-latest",
         messages: [{ role: "user", content: prompt }],
         max_tokens: 400, temperature: 0.3,
       }),

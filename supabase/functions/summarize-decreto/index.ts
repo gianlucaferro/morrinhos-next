@@ -46,7 +46,7 @@ Use linguagem acessível, sem jargão jurídico. Máximo 150 palavras.`;
         "Authorization": `Bearer ${lovableKey}`,
       },
       body: JSON.stringify({
-        model: "gemini-2.5-flash-lite",
+        model: "gemini-flash-lite-latest",
         messages: [{ role: "user", content: prompt }],
         max_tokens: 500,
         temperature: 0.3,
